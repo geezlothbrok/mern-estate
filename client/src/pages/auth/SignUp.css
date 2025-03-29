@@ -48,3 +48,15 @@
     font-size: x-small;
     left: 0;
 }
+
+
+@media only screen and (max-width: 768px) {
+    .signup-container {
+        height: 100vh;
+        padding-block: 0;
+    }
+
+    .form-container {
+        margin-top: 0;
+    }
+}
