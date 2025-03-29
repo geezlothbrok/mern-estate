@@ -1,0 +1,50 @@
+.signup-container {
+    background: var(--page-background);
+    display: grid;
+    place-items: center;
+    padding-block: 3rem;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.username {
+    width: 320px;
+    padding: 7px;
+    border-radius: 3px;
+    outline: none;
+    box-sizing: border-box;
+    border: 1px solid var(--border);
+    font-family: "Comfortaa", sans-serif;
+    background: transparent;
+}
+
+.submit {
+    width: 320px;
+    width: 320px;
+    padding: 7px;
+    border-radius: 3px;
+    outline: none;
+    box-sizing: border-box;
+    background: var( --color-orange);
+    border: transparent;
+    font-family: "Comfortaa", sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.already-account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    font-size: x-small;
+    left: 0;
+}

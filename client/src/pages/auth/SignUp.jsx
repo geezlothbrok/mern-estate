@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import "./SignUp.css";
 
 function SignUp() {
   return (
@@ -10,12 +11,12 @@ function SignUp() {
         <input type="email" placeholder='email' id='email' className='username'/>
         <input type="password" placeholder='password' id='password' className='username'/>
         <input type="tel" name="" id="phone" placeholder='tel' className='username'/>
-        <button type="submit">sign up</button>
-        <button>continue with google</button>
+        <button type="submit" className='submit' style={{marginTop: 20}}>sign up</button>
+        <button className='submit' style={{backgroundColor: "#DB4437"}}>continue with google</button>
         <div className="already-account">
           <p className="already-text">Already Have an Account?</p>
           <Link to="/sign-in">
-          <span className="already-link">sign in</span></Link>
+          <span className="already-link" style={{textTransform: "capitalize"}}>sign in</span></Link>
         </div>
       </form>
     </div>

@@ -3,7 +3,9 @@
   --color-orange: #d35400;
   --main-color: #2c3e50;
   --white-color: #fdfefe;
-  --color-green: #229954
+  --color-green: #229954;
+  --page-background: #eeeeee;
+  --border: #757575
 }
 
 * {
