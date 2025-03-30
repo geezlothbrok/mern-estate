@@ -6,9 +6,13 @@ import Profile from "./pages/auth/Profile";
 import Home from "./pages/home/Home";
 import About from "./pages/About";
 import Header from "./components/nav/Header";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
+    <>
+    <ToastContainer />
     <BrowserRouter>
       <Header />
       <Routes>
@@ -19,6 +23,7 @@ function App() {
         <Route path="/about-us" element={<About />} />
       </Routes>
     </BrowserRouter>
+    </>
   );
 }
 
