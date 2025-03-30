@@ -1,14 +1,20 @@
-import React, { useState } from  'react';
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.css";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../../redux/user/userSlice";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -20,7 +26,7 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -30,17 +36,14 @@ function SignIn() {
       });
       const data = await res.json();
       if (data.success === false) {
-        setError(data.message || "Something went wrong");
-        setLoading(false);
+        dispatch(signInFailure(data.message || "Something went wrong"));
         return;
       }
-      setLoading(false);
-      setError(null);
+      dispatch(signInSuccess(data));
       toast.success("You have successfully Loged in!");
       navigate("/");
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      dispatch(signInFailure(error.message));
     }
   };
 
@@ -48,7 +51,6 @@ function SignIn() {
     <div className="signup-container">
       <h1 className="signup-title">Sign In</h1>
       <form className="form-container" onSubmit={handleSubmit}>
-       
         <input
           type="email"
           placeholder="email"
@@ -65,17 +67,6 @@ function SignIn() {
           required
           onChange={handleChange}
         />
-        {/* <input
-          type="tel"
-          name="phone"
-          id="phone"
-          placeholder="+233 4567890"
-          pattern="^\+?[0-9]{7,15}$"
-          inputmode="numeric"
-          required
-          onChange={handleChange}
-          className="username"
-        /> */}
         <button
           type="submit"
           className="submit"
@@ -84,13 +75,6 @@ function SignIn() {
         >
           {loading ? "loading" : "sign in"}
         </button>
-        {/* <button
-          type="button"
-          className="submit"
-          style={{ backgroundColor: "#DB4437" }}
-        >
-          continue with google
-        </button> */}
         <div className="already-account">
           <p className="already-text">Dont have an account yet?</p>
           <Link to="/sign-up">
@@ -105,7 +89,7 @@ function SignIn() {
         {error && <p className="error">{error}</p>}
       </form>
     </div>
-  )
+  );
 }
 
-export default SignIn
+export default SignIn;
