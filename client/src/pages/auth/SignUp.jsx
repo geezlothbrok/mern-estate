@@ -4,7 +4,6 @@ import "./SignUp.css";
 import { toast } from "react-toastify";
 
 function SignUp() {
-
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -12,42 +11,39 @@ function SignUp() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData(
-      {
-        ...formData,
-        [e.target.id]: e.target.value
-      }
-    )
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-    const res = await fetch("/api/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(formData)
-    });
-    const data = await res.json();
-    if(data.success === false) {
-      setError(data.message);
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        setError(data.message || "Somrthing went wrong");
+        setLoading(false);
+        return;
+      }
       setLoading(false);
-      return;
-    }
-    setLoading(false);
-    setError(null);
-    navigate("/sign-in");
+      setError(null);
+      toast.success("Account created successfully!");
+      navigate("/sign-in");
     } catch (error) {
       setLoading(false);
       setError(error.message);
     }
-    
-    
-  }
-  
+  };
+
   return (
     <div className="signup-container">
       <h1 className="signup-title">Sign Up</h1>
@@ -81,14 +77,19 @@ function SignUp() {
           name="phone"
           id="phone"
           placeholder="+233 4567890"
-          pattern="\+?[0-9\s\-]{7,15}"
+          pattern="^\+?[0-9]{7,15}$"
           inputmode="numeric"
           required
           onChange={handleChange}
           className="username"
         />
-        <button type="submit" className="submit" style={{ marginTop: 20 }} disabled={loading}>
-         {loading ? "loading" : "sign up"}
+        <button
+          type="submit"
+          className="submit"
+          style={{ marginTop: 20 }}
+          disabled={loading}
+        >
+          {loading ? "loading" : "sign up"}
         </button>
         <button
           type="button"

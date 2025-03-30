@@ -12,17 +12,17 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
-    <ToastContainer />
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/about-us" element={<About />} />
-      </Routes>
-    </BrowserRouter>
+      <ToastContainer />
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/about-us" element={<About />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
