@@ -30,7 +30,7 @@ function SignUp() {
       });
       const data = await res.json();
       if (data.success === false) {
-        setError(data.message || "Somrthing went wrong");
+        setError(data.message || "Something went wrong");
         setLoading(false);
         return;
       }
