@@ -54,6 +54,10 @@
     font-size: x-small;
 }
 
+.show-listing:hover {
+    text-decoration: underline;
+}
+
 
 @media only screen and (max-width: 768px) {
     .signup-container {
