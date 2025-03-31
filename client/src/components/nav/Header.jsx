@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./Header.css";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import avatar from "../../assets/images/display_photo.jpg";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
+import { useSelector } from "react-redux";
+
 
 function Header() {
+  const {curentUser} = useSelector(state => state.user)
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -51,7 +54,9 @@ function Header() {
           </div>
 
           <div className="nav-auth">
-            <img src={avatar} alt="display avatar" className="avatar"/>
+            <Link to="/profile">
+            {curentUser ? (<img src={curentUser.avatar} alt="display avatar" className="avatar"/>) : (<img src={avatar} alt="display avatar" className="avatar"/>)}
+            </Link>
             <NavLink to="/sign-in">Sign in</NavLink>
           </div>
           {/* Mobile menu icon */}
