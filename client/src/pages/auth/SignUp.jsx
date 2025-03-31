@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.css";
 import { toast } from "react-toastify";
+import OAuth from "./OAuth";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -91,13 +92,7 @@ function SignUp() {
         >
           {loading ? "loading" : "sign up"}
         </button>
-        <button
-          type="button"
-          className="submit"
-          style={{ backgroundColor: "#DB4437" }}
-        >
-          continue with google
-        </button>
+        <OAuth />
         <div className="already-account">
           <p className="already-text">Already Have an Account?</p>
           <Link to="/sign-in">

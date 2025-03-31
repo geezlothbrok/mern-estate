@@ -17,10 +17,15 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     phone: {
-        type: Number,
-        required: true,
-        unique: true
-    }
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    avatar: {
+      type: String,
+      default:
+        "https://img.freepik.com/premium-vector/man-avatar-profile-picture-isolated-background-avatar-profile-picture-man_1293239-4841.jpg",
+    },
   },
   { timestamps: true }
 );

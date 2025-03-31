@@ -8,6 +8,7 @@ import {
   signInStart,
   signInSuccess,
 } from "../../redux/user/userSlice";
+import OAuth from "./OAuth";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
@@ -75,6 +76,7 @@ function SignIn() {
         >
           {loading ? "loading" : "sign in"}
         </button>
+        <OAuth />
         <div className="already-account">
           <p className="already-text">Dont have an account yet?</p>
           <Link to="/sign-up">
