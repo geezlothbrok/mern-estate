@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRouter from "./routes/user.routes.js";
 import authRouter from "./routes/auth.routes.js";
+import listingRouter from "./routes/listing.routes.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -19,6 +20,12 @@ mongoose
     console.log("Database connection error:", err);
   });
 
+  const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+  };
+  mongoose.connect(process.env.MONGO, options)
 const app = express();
 
 app.use(express.json());
@@ -31,6 +38,7 @@ app.listen(3000, () => {
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/listing", listingRouter);
 
 //middle ware for error handling
 app.use((err, req, res, next) => {
