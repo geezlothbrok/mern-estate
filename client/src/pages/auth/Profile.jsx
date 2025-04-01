@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./SignUp.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { app } from "../../firebase/firebase.config";
 import {
   getDownloadURL,
@@ -8,21 +8,35 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import {
+  updateUserFailure,
+  updateUserStart,
+  updateUserSuccess,
+} from "../../redux/user/userSlice";
+import { toast } from "react-toastify";
+import Loader from "../../components/loader/Loader"
 
 function Profile() {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const fileRef = useRef(null);
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
+  console.log(formData);
 
+  const dispatch = useDispatch();
+
+  // This useEffect hook is used to set the initial state of the formData object with the current user's data.
+  // It uses the useSelector hook to get the current user data from the Redux store.
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
     }
   }, [file]);
 
+  // This function handles the file upload to Firebase Storage
+  // and updates the formData state with the download URL of the uploaded file.
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
@@ -39,6 +53,7 @@ function Profile() {
       (error) => {
         console.error("Upload error:", error);
         setFileUploadError(true);
+        toast.error("Error in uploading image!");
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
@@ -48,10 +63,48 @@ function Profile() {
     );
   };
 
+  // This function handles the change event for the input fields and updates the formData state accordingly.
+  // It uses the spread operator to create a new object with the updated field value.
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  // This function handles the form submission event and sends a POST request to update the user profile.
+  // It uses the fetch API to send the request and updates the Redux store with the new user data.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      toast.success("Profile updated successfully!");
+    } catch (error) {
+      dispatch(updateUserFailure(error.message));
+    }
+  };
+
   return (
+    <>
+    {loading && <Loader />}
+    {error && toast.error(error)}
     <div className="signup-container" style={{ paddingBlock: "1rem" }}>
       <h1 className="signup-title">profile</h1>
-      <form className="form-container" style={{ marginTop: 0 }}>
+      <form
+        className="form-container"
+        style={{ marginTop: 0 }}
+        onSubmit={handleSubmit}
+      >
         <input
           type="file"
           ref={fileRef}
@@ -74,11 +127,17 @@ function Profile() {
         />
         <p>
           {fileUploadError ? (
-            <span style={{color: "red", fontSize: "12px"}}>Error in Uploading image</span>
+            <span style={{ color: "red", fontSize: "12px" }}>
+              Error in Uploading image
+            </span>
           ) : filePerc > 0 && filePerc < 100 ? (
-            <span style={{color: "#58d68d", fontSize: "12px"}}>{`Uploading ${filePerc}%`}</span>
+            <span
+              style={{ color: "#58d68d", fontSize: "12px" }}
+            >{`Uploading ${filePerc}%`}</span>
           ) : filePerc === 100 ? (
-            <span style={{color: "#186a3b", fontSize: "12px"}}>Image Uploaded Successfully!</span>
+            <span style={{ color: "#186a3b", fontSize: "12px" }}>
+              Image Uploaded Successfully!
+            </span>
           ) : (
             ""
           )}
@@ -89,21 +148,23 @@ function Profile() {
           placeholder="username"
           id="username"
           className="username"
-          // onChange={handleChange}
+          defaultValue={currentUser.username}
+          onChange={handleChange}
         />
         <input
           type="email"
           placeholder="email"
           id="email"
           className="username"
-          // onChange={handleChange}
+          defaultValue={currentUser.email}
+          onChange={handleChange}
         />
         <input
           type="password"
           placeholder="password"
           id="password"
           className="username"
-          // onChange={handleChange}
+          onChange={handleChange}
         />
         <input
           type="tel"
@@ -112,7 +173,8 @@ function Profile() {
           placeholder="+233 4567890"
           pattern="^\+?[0-9]{7,15}$"
           inputmode="numeric"
-          // onChange={handleChange}
+          defaultValue={currentUser.phone}
+          onChange={handleChange}
           className="username"
         />
         <button
@@ -123,9 +185,9 @@ function Profile() {
             backgroundColor: "#4caf50",
             letterSpacing: 1,
           }}
-          // disabled={loading}
+          disabled={loading}
         >
-          update
+          {loading ? "Updating..." : "Update Profile"}
         </button>
         <button
           type="submit"
@@ -171,9 +233,10 @@ function Profile() {
         >
           Show Listings
         </p>
-        {/* {error && <p className="error">{error}</p>} */}
+         <p className="error">{error ? error : ""}</p>
       </form>
     </div>
+    </>
   );
 }
 
