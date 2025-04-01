@@ -12,6 +12,8 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserFailure,
+  signOutUserStart,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
@@ -118,6 +120,25 @@ function Profile() {
     }
   };
 
+
+  // This function handles the sign-out event and sends a POST request to sign out the user.
+  // It uses the fetch API to send the request and updates the Redux store accordingly.
+const handleSignOut = async () => {
+  try {
+    dispatch(signOutUserStart());
+    const res = await fetch("/api/auth/signout") // Sign out the user
+    const data = await res.json();
+    if (data.success === false) {
+      dispatch(deleteUserFailure(data.message));
+      toast.error(data.message);
+      return;
+    }
+    dispatch(deleteUserSuccess(data));
+  } catch (error) {
+    dispatch(deleteUserFailure(data.message));
+    toast.error(error.message);
+  }
+};
   return (
     <>
     {loading && <Loader />}
@@ -241,6 +262,7 @@ function Profile() {
           </span>
 
           <span
+          onClick={handleSignOut}
             className="already-link"
             style={{
               textTransform: "capitalize",
