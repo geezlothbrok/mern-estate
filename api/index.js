@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 
+// Connect to MongoDB using the connection string from environment variables
+// The connection string should be stored in a .env file for security reasons
 mongoose
   .connect(process.env.MONGO, {
     useNewUrlParser: true,
@@ -20,6 +22,9 @@ mongoose
     console.log("Database connection error:", err);
   });
 
+
+  // Create a new connection with options
+  // This is useful when you want to set specific options for the connection
   const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -28,17 +33,20 @@ mongoose
   mongoose.connect(process.env.MONGO, options)
 const app = express();
 
+// Middleware to parse incoming JSON requests
 app.use(express.json());
 
+// Middleware to parse URL-encoded data (form submissions)
 app.use(cookieParser());
 
+// Middleware to parse cookies from incoming requests
 app.listen(3000, () => {
   console.log("Server is running on port 3000!!");
 });
 
-app.use("/api/user", userRouter);
-app.use("/api/auth", authRouter);
-app.use("/api/listing", listingRouter);
+app.use("/api/user", userRouter); // user routes
+app.use("/api/auth", authRouter); // auth routes
+app.use("/api/listing", listingRouter); // listing routes
 
 //middle ware for error handling
 app.use((err, req, res, next) => {

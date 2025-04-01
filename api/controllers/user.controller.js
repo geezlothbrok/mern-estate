@@ -2,12 +2,18 @@ import bcryptjs from "bcryptjs";
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/error.js";
 
+
+// Test route to check if the server is running
+// @route GET /api/user/test
 export const test = (req, res) => {
   res.json({
     message: "hello World!",
   });
 };
 
+
+// Update user information
+// @route POST /api/user/update/:id
 export const updateUser = async (req, res, next) => {
   if (req.user.id !== req.params.id)
     return next(errorHandler(401, "You can only update your account!"));
@@ -16,6 +22,7 @@ export const updateUser = async (req, res, next) => {
       req.body.password = bcryptjs.hashSync(req.body.password, 10);
     }
 
+    // Check if the user is trying to update their password
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       {
@@ -39,6 +46,8 @@ export const updateUser = async (req, res, next) => {
 };
 
 //delete user
+// @route DELETE /api/user/delete/:id
+// This route is protected by the verifyToken middleware
 export const deleteUser = async (req, res, next) => {
   if (req.user.id !== req.params.id)
     return next(errorHandler(401, "You can only delete your account!"));

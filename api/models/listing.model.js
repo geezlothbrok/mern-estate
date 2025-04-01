@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+
+// Define the listing schema using Mongoose
+// The schema defines the structure of the listing document in the MongoDB database
 const listingSchema = new mongoose.Schema(
   {
     name: {

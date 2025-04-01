@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 
+
+// Define the user schema using Mongoose
+// The schema defines the structure of the user document in the MongoDB database
 const userSchema = new mongoose.Schema(
   {
     username: {
