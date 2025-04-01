@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 
 function Header() {
-  const {curentUser} = useSelector(state => state.user)
+  const {currentUser} = useSelector(state => state.user)
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -55,9 +55,10 @@ function Header() {
 
           <div className="nav-auth">
             <Link to="/profile">
-            {curentUser ? (<img src={curentUser.avatar} alt="display avatar" className="avatar"/>) : (<img src={avatar} alt="display avatar" className="avatar"/>)}
+            {currentUser ? (<img src={currentUser.avatar} alt="display avatar" className="avatar"/>) : (<img src={avatar} alt="display avatar" className="avatar"/>)}
             </Link>
-            <NavLink to="/sign-in">Sign in</NavLink>
+            {/* {currentUser && <span className="">{currentUser.username}</span>} */}
+            {!currentUser && <NavLink to="/sign-in">Sign in</NavLink>}
           </div>
           {/* Mobile menu icon */}
           <div className="nav-mobile" onClick={() => setIsOpen(true)}>

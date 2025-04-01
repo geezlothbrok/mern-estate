@@ -190,7 +190,7 @@ function Profile() {
           {loading ? "Updating..." : "Update Profile"}
         </button>
         <button
-          type="submit"
+          type="button"
           className="submit"
           style={{
             marginTop: 20,
