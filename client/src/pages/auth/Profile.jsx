@@ -9,6 +9,9 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import {
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
@@ -91,6 +94,27 @@ function Profile() {
       toast.success("Profile updated successfully!");
     } catch (error) {
       dispatch(updateUserFailure(error.message));
+    }
+  };
+
+  // This function handles the delete user event and sends a DELETE request to delete the user account.
+  // It uses the fetch API to send the request and updates the Redux store accordingly.
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+      toast.success("Account deleted successfully!");
+    } catch (error) {
+      dispatch(deleteUserFailureUserFailure(error.message));
+      toast.error(error.message);
     }
   };
 
@@ -205,6 +229,7 @@ function Profile() {
 
         <div className="already-account">
           <span
+          onClick={handleDeleteUser}
             className="already-link"
             style={{
               textTransform: "capitalize",
@@ -233,7 +258,7 @@ function Profile() {
         >
           Show Listings
         </p>
-         <p className="error">{error ? error : ""}</p>
+         
       </form>
     </div>
     </>
