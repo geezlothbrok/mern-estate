@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.css";
 import { toast } from "react-toastify";
 import OAuth from "./OAuth";
+import Loader from "../../components/loader/Loader";
 
 function SignUp() {
   const [formData, setFormData] = useState({});
@@ -46,67 +47,70 @@ function SignUp() {
   };
 
   return (
-    <div className="signup-container">
-      <h1 className="signup-title">Sign Up</h1>
-      <form className="form-container" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="username"
-          id="username"
-          className="username"
-          required
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          placeholder="email"
-          id="email"
-          className="username"
-          required
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          id="password"
-          className="username"
-          required
-          onChange={handleChange}
-        />
-        <input
-          type="tel"
-          name="phone"
-          id="phone"
-          placeholder="+233 4567890"
-          pattern="^\+?[0-9]{7,15}$"
-          inputmode="numeric"
-          required
-          onChange={handleChange}
-          className="username"
-        />
-        <button
-          type="submit"
-          className="submit"
-          style={{ marginTop: 20 }}
-          disabled={loading}
-        >
-          {loading ? "loading" : "sign up"}
-        </button>
-        <OAuth />
-        <div className="already-account">
-          <p className="already-text">Already Have an Account?</p>
-          <Link to="/sign-in">
-            <span
-              className="already-link"
-              style={{ textTransform: "capitalize" }}
-            >
-              sign in
-            </span>
-          </Link>
-        </div>
-        {error && <p className="error">{error}</p>}
-      </form>
-    </div>
+    <>
+      {loading && <Loader />}
+      <div className="signup-container">
+        <h1 className="signup-title">Sign Up</h1>
+        <form className="form-container" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="username"
+            id="username"
+            className="username"
+            required
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            placeholder="email"
+            id="email"
+            className="username"
+            required
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="password"
+            id="password"
+            className="username"
+            required
+            onChange={handleChange}
+          />
+          <input
+            type="tel"
+            name="phone"
+            id="phone"
+            placeholder="+233 4567890"
+            pattern="^\+?[0-9]{7,15}$"
+            inputmode="numeric"
+            required
+            onChange={handleChange}
+            className="username"
+          />
+          <button
+            type="submit"
+            className="submit"
+            style={{ marginTop: 20 }}
+            disabled={loading}
+          >
+            {loading ? "loading" : "sign up"}
+          </button>
+          <OAuth />
+          <div className="already-account">
+            <p className="already-text">Already Have an Account?</p>
+            <Link to="/sign-in">
+              <span
+                className="already-link"
+                style={{ textTransform: "capitalize" }}
+              >
+                sign in
+              </span>
+            </Link>
+          </div>
+          {error && <p className="error">{error}</p>}
+        </form>
+      </div>
+    </>
   );
 }
 

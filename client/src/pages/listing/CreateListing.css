@@ -1,0 +1,27 @@
+.listing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: var(--page-background);
+    min-height: 100vh;
+    padding-inline: 4rem;
+}
+
+.listing-form-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    width: 100%;
+    gap: 2rem;
+}
+
+.form-listing {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    height: inherit;
+    gap: 1rem;
+}

@@ -12,7 +12,6 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
-  signOutUserFailure,
   signOutUserStart,
   updateUserFailure,
   updateUserStart,
@@ -20,6 +19,7 @@ import {
 } from "../../redux/user/userSlice";
 import { toast } from "react-toastify";
 import Loader from "../../components/loader/Loader"
+import { Link } from "react-router-dom";
 
 function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -234,7 +234,8 @@ const handleSignOut = async () => {
         >
           {loading ? "Updating..." : "Update Profile"}
         </button>
-        <button
+        <Link
+        to="/create-listing"
           type="button"
           className="submit"
           style={{
@@ -242,11 +243,12 @@ const handleSignOut = async () => {
             backgroundColor: "#2c3e50",
             color: "wheat",
             letterSpacing: 1,
+            textAlign: "center",
           }}
           // disabled={loading}
         >
           create listing
-        </button>
+        </Link>
 
         <div className="already-account">
           <span

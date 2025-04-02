@@ -9,6 +9,7 @@ import {
   signInSuccess,
 } from "../../redux/user/userSlice";
 import OAuth from "./OAuth";
+import Loader from "../../components/loader/Loader";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
@@ -49,48 +50,51 @@ function SignIn() {
   };
 
   return (
-    <div className="signup-container">
-      <h1 className="signup-title">Sign In</h1>
-      <form className="form-container" onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="email"
-          id="email"
-          className="username"
-          required
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          id="password"
-          className="username"
-          required
-          onChange={handleChange}
-        />
-        <button
-          type="submit"
-          className="submit"
-          style={{ marginTop: 20 }}
-          disabled={loading}
-        >
-          {loading ? "loading" : "sign in"}
-        </button>
-        <OAuth />
-        <div className="already-account">
-          <p className="already-text">Dont have an account yet?</p>
-          <Link to="/sign-up">
-            <span
-              className="already-link"
-              style={{ textTransform: "capitalize" }}
-            >
-              create one
-            </span>
-          </Link>
-        </div>
-        {error && <p className="error">{error}</p>}
-      </form>
-    </div>
+    <>
+      {loading && <Loader />}
+      <div className="signup-container">
+        <h1 className="signup-title">Sign In</h1>
+        <form className="form-container" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="email"
+            id="email"
+            className="username"
+            required
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="password"
+            id="password"
+            className="username"
+            required
+            onChange={handleChange}
+          />
+          <button
+            type="submit"
+            className="submit"
+            style={{ marginTop: 20 }}
+            disabled={loading}
+          >
+            {loading ? "loading" : "sign in"}
+          </button>
+          <OAuth />
+          <div className="already-account">
+            <p className="already-text">Dont have an account yet?</p>
+            <Link to="/sign-up">
+              <span
+                className="already-link"
+                style={{ textTransform: "capitalize" }}
+              >
+                create one
+              </span>
+            </Link>
+          </div>
+          {error && <p className="error">{error}</p>}
+        </form>
+      </div>
+    </>
   );
 }
 
