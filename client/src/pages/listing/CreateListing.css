@@ -4,48 +4,46 @@
   align-items: center;
   padding: 20px;
   background: var(--page-background);
-    min-height: 100vh;
-    padding-inline: 2rem;
+  min-height: 100vh;
+  padding-inline: 2rem;
 }
 
 .listing-form-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: inherit;
-    width: 100%;
-    gap: 2rem;
-    padding-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
+  width: 100%;
+  gap: 2rem;
+  padding-top: 5rem;
 }
 
 .form-listing {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    /* width: 70%; */
-    height: inherit;
-    gap: 1rem;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
+  height: inherit;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .listing-image {
-   display: flex;
-   justify-content: center;
-    align-items: center;
-    height: inherit;
-    gap: 1rem;
-    flex-direction: column;
-    /* width: 30%; */
+  display: flex;
+  justify-content: center;
+  height: inherit;
+  gap: 1rem;
+  flex-direction: column;
 }
 
 .input-field {
-max-width: 300px;
-padding: 15px;
-border-radius: 3px;
-outline: none;
-background: var(--white-color);
-border: none;
-font-family: "Comfortaa", sans-serif;
+  max-width: 350px;
+  padding: 15px;
+  border-radius: 3px;
+  outline: none;
+  background: var(--white-color);
+  border: none;
+  font-family: "Comfortaa", sans-serif;
 }
 
 .input-field:focus {
@@ -53,26 +51,92 @@ font-family: "Comfortaa", sans-serif;
 }
 
 .input-fields {
-    max-width: 70px;
-padding: 10px;
-border-radius: 3px;
-outline: none;
-background: var(--white-color);
-border: none;
-font-family: "Comfortaa", sans-serif;
+  max-width: 70px;
+  padding: 10px;
+  border-radius: 3px;
+  outline: none;
+  background: var(--white-color);
+  border: none;
+  font-family: "Comfortaa", sans-serif;
+  margin: 10px;
 }
 
 .input-label {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    width: inherit;
-    margin: 10px;
-    gap: 5px;
-    
+  margin: 10px;
 }
 
 label {
-    font-size: smaller;
+  font-size: smaller;
+}
+
+.checkboxes {
+  display: flex;
+  margin: 10px;
+}
+
+#sale,
+#rent,
+#parking {
+  margin-right: 15px;
+}
+
+.caution-title {
+    font-size: small;
+    font-weight: bold
+}
+
+.caution-text {
+    font-size: small;
+    margin-left: 10px
+}
+
+.caution-container {
+    display: flex;
+   
+}
+
+.files {
+    max-width: 350px;
+  padding: 15px;
+  border-radius: 3px;
+  outline: none;
+  background: var(--white-color);
+  border: none;
+  font-family: "Comfortaa", sans-serif;
+}
+
+input#file-upload-button {
+    font-family: "Comfortaa", sans-serif;
+}
+
+.uploa {
+   width: 100px;
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid var(--color-green);
+    outline: none;
+    background: transparent;
+    font-family: "Comfortaa", sans-serif;
+    text-transform: uppercase;
+    cursor: pointer
+}
+
+.image-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem
+}
+
+.listing-submit {
+    padding: 15px;
+    border-radius: 3px;
+    border: transparent;
+    outline: none;
+    background: var(--main-color);
+    font-family: "Comfortaa", sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 2rem;
+    color: wheat;
+    letter-spacing: 1
 }
