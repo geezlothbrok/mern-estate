@@ -8,12 +8,13 @@ function CreateListing() {
 
       <form className="listing-form-content">
         <div className="form-listing">
-          <input type="text" id="title" placeholder="Enter title" required />
+          <input type="text" id="title" placeholder="Enter title" required className="input-field"/>
 
           <textarea
             id="description"
             placeholder="Enter description"
             required
+            className="input-field"
           ></textarea>
 
           <input
@@ -21,23 +22,33 @@ function CreateListing() {
             id="location"
             placeholder="Enter location"
             required
+            className="input-field"
           />
 
-<div className="input-label"><label htmlFor="price">Price</label>
-          <input type="number" id="price" placeholder="Enter price" required />
-          <label htmlFor="sale">Sale</label>
-          <input type="checkbox" id="sale" required />
-          <label htmlFor="rent">Rent</label>
-          <input type="checkbox" id="rent" required />
-          <label htmlFor="parking">Parking spot</label>
-          <input type="checkbox" id="parking" required />
-          <label htmlFor="furnished">Furnished</label>
-          <input type="checkbox" id="furnished" required />
-          <label htmlFor="bed">Bed</label>
-          <input type="number" id="bed" required />
-          <label htmlFor="bath">Baths</label>
-          <input type="number" id="bath" required /></div>
-          
+          <div className="input-label">
+            <label htmlFor="price">Price</label>
+            <input
+              type="number"
+              id="price"
+              required
+              className="input-fields"
+            />
+            <label htmlFor="bed" >Bed</label>
+            <input type="number" id="bed" required className="input-fields"/>
+            <label htmlFor="bath">Baths</label>
+            <input type="number" id="bath" required  className="input-fields"/>
+            
+          </div>
+          <div className="checkboxes">
+            <label htmlFor="sale">Sale</label>
+            <input type="checkbox" id="sale" required />
+            <label htmlFor="rent">Rent</label>
+            <input type="checkbox" id="rent" required />
+            <label htmlFor="parking">Parking spot</label>
+            <input type="checkbox" id="parking" required />
+            <label htmlFor="furnished">Furnished</label>
+            <input type="checkbox" id="furnished" required />
+            </div>
         </div>
 
         <div className="listing-image">
