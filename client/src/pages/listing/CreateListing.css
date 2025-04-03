@@ -4,7 +4,7 @@
   align-items: center;
   padding: 20px;
   background: var(--page-background);
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding-inline: 2rem;
 }
 
@@ -139,4 +139,54 @@ input#file-upload-button {
     margin-top: 2rem;
     color: wheat;
     letter-spacing: 1
+}
+
+
+@media only screen and (max-width: 768px) {
+  .listing-form-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 3rem;
+    height: 100vh;
+  }
+
+  .listing-container{
+    padding-block: 3rem;
+  }
+
+  .form-listing {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    height: inherit;
+  }
+  .input-field {
+    max-width: 100%;
+    padding: 25px;
+    border-radius: 3px;
+    outline: none;
+    background: var(--white-color);
+    border: none;
+    font-family: "Comfortaa", sans-serif;
+  }
+
+  .input-label {
+    margin: auto;
+  }
+
+  .checkboxes {
+    margin: auto;
+  }
+
+  .caution-container {
+    margin: auto;
+}
+
+.image-container {
+  display: flex;
+  gap: 1rem;
+}
 }

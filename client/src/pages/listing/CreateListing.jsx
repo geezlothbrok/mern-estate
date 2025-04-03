@@ -14,8 +14,8 @@ function CreateListing() {
             placeholder="Enter title"
             required
             className="input-field"
-            minLength="10"
-            maxLength="62"
+            minLength={10}
+            maxLength= {62}
           />
 
           <textarea
