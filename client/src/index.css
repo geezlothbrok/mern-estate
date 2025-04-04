@@ -1,11 +1,11 @@
 :root {
-  --logo-font:  "Pacifico", cursive;
+  --logo-font: "Pacifico", cursive;
   --color-orange: #d35400;
   --main-color: #2c3e50;
   --white-color: #fdfefe;
   --color-green: #229954;
   --page-background: #eeeeee;
-  --border: #757575
+  --border: #757575;
 }
 
 * {
@@ -21,7 +21,6 @@ a {
 li {
   list-style: none;
 }
-
 
 body {
   font-family: "Comfortaa", sans-serif;

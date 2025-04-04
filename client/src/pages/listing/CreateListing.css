@@ -6,6 +6,7 @@
   background: var(--page-background);
   /* min-height: 100vh; */
   padding-inline: 2rem;
+  position: relative;
 }
 
 .listing-form-content {
@@ -124,7 +125,8 @@ input#file-upload-button {
 .image-container {
     display: flex;
     gap: 1rem;
-    margin-top: 2rem
+    margin-top: 2rem;
+    flex-direction: column;
 }
 
 .listing-submit {
@@ -141,6 +143,21 @@ input#file-upload-button {
     letter-spacing: 1
 }
 
+.image-preview {
+  height: 100px;
+  width: 100px;
+  object-fit: contain;
+  border-radius: 10px;
+  /* box-shadow: 0 0 5px var(--color-orange); */
+}
+
+.svg-icon {
+  color: red;
+  cursor: pointer;
+  position: absolute;
+  right: auto;
+}
+
 
 @media only screen and (max-width: 768px) {
   .listing-form-content {
@@ -151,6 +168,7 @@ input#file-upload-button {
     gap: 2rem;
     padding-top: 3rem;
     height: 100vh;
+    /* padding-inline: 1rem; */
   }
 
   .listing-container{
