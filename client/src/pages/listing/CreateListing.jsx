@@ -129,6 +129,9 @@ function CreateListing() {
     }
   };
 
+
+  // Handle form submission
+  // This function is triggered when the user submits the form
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -310,7 +313,7 @@ function CreateListing() {
                   </div>
                 ))}
             </div>
-            <button type="submit" className="listing-submit">
+            <button type="submit" className="listing-submit" disabled={loading}>
               {loading ? "Creating..." : "Create Listing"}
             </button>
           </div>
