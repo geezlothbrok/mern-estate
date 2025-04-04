@@ -8,13 +8,29 @@ import {
 } from "firebase/storage";
 import { app } from "../../firebase/firebase.config";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-
+import Loading from "../../components/loader/Loader";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 function CreateListing() {
   const [files, setFiles] = React.useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
+    name: "",
+    description: "",
+    address: "",
+    price: 50,
+    bathrooms: 1,
+    bedrooms: 1,
+    type: "rent",
+    parking: false,
+    furnished: false,
   });
+  console.log(formData);
+
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
 
   // Handle image upload
   // This function is triggered when the user selects files to upload
@@ -86,126 +102,222 @@ function CreateListing() {
     });
   };
 
+  const handleChange = (e) => {
+    if (e.target.id === "sale" || e.target.id === "rent") {
+      setFormData({
+        ...formData,
+        type: e.target.id,
+      });
+    }
+
+    if (e.target.id === "parking" || e.target.id === "furnished") {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.checked,
+      });
+    }
+
+    if (
+      e.target.type === "number" ||
+      e.target.type === "text" ||
+      e.target.type === "textarea"
+    ) {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (formData.imageUrls.length < 1) {
+        toast.error("Please upload at least one image.");
+      }
+      setLoading(true);
+      setError(false);
+      toast.success("Listing created successfully!");
+      const res = await fetch("/api/listing/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser._id,
+        }),
+      });
+      const data = await res.json();
+      setLoading(false);
+      if (data.success === false) {
+        setError(data.message);
+      }
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
   return (
-    <main className="listing-container">
-      <h2 className="listing-title">Create a Listing</h2>
+    <>
+      {loading && <Loading />}
+      <main className="listing-container">
+        <h2 className="listing-title">Create a Listing</h2>
 
-      <form className="listing-form-content">
-        <div className="form-listing">
-          <input
-            type="text"
-            id="name"
-            placeholder="Enter title"
-            required
-            className="input-field"
-            minLength={10}
-            maxLength={62}
-          />
-
-          <textarea
-            id="description"
-            placeholder="Enter description"
-            required
-            className="input-field"
-            type="text"
-          />
-
-          <input
-            type="text"
-            id="location"
-            placeholder="Enter location"
-            required
-            className="input-field"
-          />
-
-          <div className="input-label">
-            <label htmlFor="price">Price</label>
+        <form className="listing-form-content" onSubmit={handleSubmit}>
+          <div className="form-listing">
             <input
-              type="number"
-              id="price"
+              type="text"
+              id="name"
+              placeholder="Enter title"
               required
-              className="input-fields"
-              min={1}
-              max={500000000}
+              className="input-field"
+              minLength={10}
+              maxLength={62}
+              onChange={handleChange}
+              value={formData.name}
             />
-            <label htmlFor="bed">Bed</label>
+
+            <textarea
+              id="description"
+              placeholder="Enter description"
+              required
+              className="input-field"
+              type="text"
+              onChange={handleChange}
+              value={formData.description}
+            />
+
             <input
-              type="number"
-              id="bed"
+              type="text"
+              id="address"
+              placeholder="Enter location"
               required
-              className="input-fields"
-              min={1}
-              max={10}
+              className="input-field"
+              onChange={handleChange}
+              value={formData.location}
             />
-            <label htmlFor="bath">Baths</label>
-            <input
-              type="number"
-              id="bath"
-              required
-              className="input-fields"
-              min={1}
-              max={10}
-            />
+
+            <div className="input-label">
+              <label htmlFor="price">Price</label>
+              <input
+                type="number"
+                id="price"
+                required
+                className="input-fields"
+                min={50}
+                max={500000000}
+                onChange={handleChange}
+                value={formData.price}
+              />
+              <label htmlFor="bed">Bed</label>
+              <input
+                type="number"
+                id="bedrooms"
+                required
+                className="input-fields"
+                min={1}
+                max={10}
+                onChange={handleChange}
+                value={formData.bed}
+              />
+              <label htmlFor="bath">Baths</label>
+              <input
+                type="number"
+                id="bathrooms"
+                required
+                className="input-fields"
+                min={1}
+                max={10}
+                onChange={handleChange}
+                value={formData.bath}
+              />
+            </div>
+            <div className="checkboxes">
+              <label htmlFor="sale">Sale</label>
+              <input
+                type="radio"
+                id="sale"
+                required
+                onChange={handleChange}
+                checked={formData.type === "sale"}
+              />
+              <label htmlFor="rent">Rent</label>
+              <input
+                type="radio"
+                id="rent"
+                required
+                onChange={handleChange}
+                checked={formData.type === "rent"}
+              />
+              <label htmlFor="parking">Parking spot</label>
+              <input
+                type="checkbox"
+                id="parking"
+                required
+                onChange={handleChange}
+                checked={formData.parking}
+              />
+              <label htmlFor="furnished">Furnished</label>
+              <input
+                type="checkbox"
+                id="furnished"
+                required
+                onChange={handleChange}
+                checked={formData.furnished}
+              />
+            </div>
           </div>
-          <div className="checkboxes">
-            <label htmlFor="sale">Sale</label>
-            <input type="checkbox" id="sale" required />
-            <label htmlFor="rent">Rent</label>
-            <input type="checkbox" id="rent" required />
-            <label htmlFor="parking">Parking spot</label>
-            <input type="checkbox" id="parking" required />
-            <label htmlFor="furnished">Furnished</label>
-            <input type="checkbox" id="furnished" required />
-          </div>
-        </div>
 
-        <div className="listing-image">
-          <div className="caution-container">
-            <p className="caution-title">Images:</p>
-            <span className="caution-text">
-              The first image shall be the cover (max 6)
-            </span>
-          </div>
-          <div className="image-container">
-            <input
-              type="file"
-              id="image"
-              accept="image/*"
-              multiple
-              required
-              className="files"
-              onChange={(e) => setFiles(Array.from(e.target.files))} // Convert FileList to an array
-            />
-            <button
-              type="button"
-              className="uploa"
-              onClick={handleImageUpload}
-              disabled={uploading}
-            >
-              {uploading ? "Uploading" : "Upload"}
+          <div className="listing-image">
+            <div className="caution-container">
+              <p className="caution-title">Images:</p>
+              <span className="caution-text">
+                The first image shall be the cover (max 6)
+              </span>
+            </div>
+            <div className="image-container">
+              <input
+                type="file"
+                id="image"
+                accept="image/*"
+                multiple
+                required
+                className="files"
+                onChange={(e) => setFiles(Array.from(e.target.files))} // Convert FileList to an array
+              />
+              <button
+                type="button"
+                className="uploa"
+                onClick={handleImageUpload}
+                disabled={uploading}
+              >
+                {uploading ? "Uploading" : "Upload"}
+              </button>
+              {formData.imageUrls.length > 0 &&
+                formData.imageUrls.map((url, index) => (
+                  <div className="image-cover">
+                    <img
+                      key={index}
+                      src={url}
+                      alt={`Uploaded ${index}`}
+                      className="image-preview"
+                    />
+                    <AiOutlineCloseCircle
+                      className="svg-icon"
+                      onClick={() => handleRemoveImage(index)}
+                    />
+                  </div>
+                ))}
+            </div>
+            <button type="submit" className="listing-submit">
+              {loading ? "Creating..." : "Create Listing"}
             </button>
-            {formData.imageUrls.length > 0 &&
-              formData.imageUrls.map((url, index) => (
-                <div className="image-cover">
-                  <img
-                    key={index}
-                    src={url}
-                    alt={`Uploaded ${index}`}
-                    className="image-preview"
-                  />
-                  <AiOutlineCloseCircle
-                    className="svg-icon"
-                    onClick={() => handleRemoveImage(index)}
-                  />
-                </div>
-              ))}
           </div>
-          <button type="submit" className="listing-submit">
-            Create Listing
-          </button>
-        </div>
-      </form>
-    </main>
+          {error && <p className="error-message">{error}</p>}
+        </form>
+      </main>
+    </>
   );
 }
 

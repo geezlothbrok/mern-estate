@@ -150,6 +150,13 @@ input#file-upload-button {
   /* box-shadow: 0 0 5px var(--color-orange); */
 }
 
+.error-message {
+  color: red;
+  font-size: x-small;
+  margin-top: 5px;
+  text-align: center;
+}
+
 .svg-icon {
   color: red;
   cursor: pointer;
