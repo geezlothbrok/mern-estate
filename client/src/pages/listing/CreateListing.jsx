@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import "./CreateListing.css";
-import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import {app} from "../../firebase/firebase.config";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { app } from "../../firebase/firebase.config";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-
 
 function CreateListing() {
   const [files, setFiles] = React.useState([]);
@@ -11,11 +15,20 @@ function CreateListing() {
     imageUrls: [],
   });
   const [uploading, setUploading] = useState(false);
-  console.log(formData);
-  
-const handleImageUpload = (e) => {
-  e.preventDefault(); // Prevent unnecessary form submission
-    if (files.length > 0 && files.length +formData.imageUrls < 7) {
+
+  // Handle image upload
+  // This function is triggered when the user selects files to upload
+  // It checks if the number of files is between 1 and 6, and then uploads them to Firebase Storage
+  // After successful upload, it updates the formData with the new image URLs
+  // If the number of files exceeds 6, it alerts the user
+  // and resets the uploading state
+  // The function also handles errors during the upload process
+  // and logs them to the console
+  // The function uses the Firebase Storage API to upload files and get their download URLs
+  // The function uses the useState hook to manage the state of the files and formData
+  const handleImageUpload = (e) => {
+    e.preventDefault(); // Prevent unnecessary form submission
+    if (files.length > 0 && files.length + formData.imageUrls < 7) {
       setUploading(true);
       const promises = [];
       for (let i = 0; i < files.length; i++) {
@@ -23,10 +36,13 @@ const handleImageUpload = (e) => {
       }
       Promise.all(promises)
         .then((urls) => {
-          setFormData({ ...formData, imageUrls: [...formData.imageUrls, ...urls] });
+          setFormData({
+            ...formData,
+            imageUrls: [...formData.imageUrls, ...urls],
+          });
           setUploading(false);
         })
-        
+
         .catch((error) => {
           console.error("Error uploading images: ", error);
           setUploading(false);
@@ -47,7 +63,8 @@ const handleImageUpload = (e) => {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(`Upload is ${progress}% done`);
         },
         (error) => {
@@ -60,12 +77,15 @@ const handleImageUpload = (e) => {
     });
   };
 
+  // Handle image removal
+  // This function is triggered when the user clicks on the remove icon of an image
   const handleRemoveImage = (index) => {
-   setFormData({
-    ...formData,
-    imageUrls: formData.imageUrls.filter((_, i) => i !== index),
-   })
+    setFormData({
+      ...formData,
+      imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+    });
   };
+
   return (
     <main className="listing-container">
       <h2 className="listing-title">Create a Listing</h2>
@@ -79,7 +99,7 @@ const handleImageUpload = (e) => {
             required
             className="input-field"
             minLength={10}
-            maxLength= {62}
+            maxLength={62}
           />
 
           <textarea
@@ -147,7 +167,7 @@ const handleImageUpload = (e) => {
             </span>
           </div>
           <div className="image-container">
-          <input
+            <input
               type="file"
               id="image"
               accept="image/*"
@@ -156,16 +176,29 @@ const handleImageUpload = (e) => {
               className="files"
               onChange={(e) => setFiles(Array.from(e.target.files))} // Convert FileList to an array
             />
-            <button type="button" className="uploa"  onClick={handleImageUpload} disabled={uploading}>
+            <button
+              type="button"
+              className="uploa"
+              onClick={handleImageUpload}
+              disabled={uploading}
+            >
               {uploading ? "Uploading" : "Upload"}
             </button>
-            {formData.imageUrls.length > 0 && formData.imageUrls.map((url, index) => (
-             <div className="image-cover">
-               <img key={index} src={url} alt={`Uploaded ${index}`} className="image-preview" />
-               <AiOutlineCloseCircle className="svg-icon" onClick={() => handleRemoveImage(index)}/>
-             </div>
-            ))}
-
+            {formData.imageUrls.length > 0 &&
+              formData.imageUrls.map((url, index) => (
+                <div className="image-cover">
+                  <img
+                    key={index}
+                    src={url}
+                    alt={`Uploaded ${index}`}
+                    className="image-preview"
+                  />
+                  <AiOutlineCloseCircle
+                    className="svg-icon"
+                    onClick={() => handleRemoveImage(index)}
+                  />
+                </div>
+              ))}
           </div>
           <button type="submit" className="listing-submit">
             Create Listing

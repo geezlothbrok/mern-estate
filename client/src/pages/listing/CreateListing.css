@@ -82,22 +82,21 @@ label {
 }
 
 .caution-title {
-    font-size: small;
-    font-weight: bold
+  font-size: small;
+  font-weight: bold;
 }
 
 .caution-text {
-    font-size: small;
-    margin-left: 10px
+  font-size: small;
+  margin-left: 10px;
 }
 
 .caution-container {
-    display: flex;
-   
+  display: flex;
 }
 
 .files {
-    max-width: 350px;
+  max-width: 350px;
   padding: 15px;
   border-radius: 3px;
   outline: none;
@@ -107,40 +106,40 @@ label {
 }
 
 input#file-upload-button {
-    font-family: "Comfortaa", sans-serif;
+  font-family: "Comfortaa", sans-serif;
 }
 
 .uploa {
-   width: 100px;
-    padding: 15px;
-    border-radius: 3px;
-    border: 1px solid var(--color-green);
-    outline: none;
-    background: transparent;
-    font-family: "Comfortaa", sans-serif;
-    text-transform: uppercase;
-    cursor: pointer
+  width: 100px;
+  padding: 15px;
+  border-radius: 3px;
+  border: 1px solid var(--color-green);
+  outline: none;
+  background: transparent;
+  font-family: "Comfortaa", sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .image-container {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-    flex-direction: column;
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-direction: column;
 }
 
 .listing-submit {
-    padding: 15px;
-    border-radius: 3px;
-    border: transparent;
-    outline: none;
-    background: var(--main-color);
-    font-family: "Comfortaa", sans-serif;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-top: 2rem;
-    color: wheat;
-    letter-spacing: 1
+  padding: 15px;
+  border-radius: 3px;
+  border: transparent;
+  outline: none;
+  background: var(--main-color);
+  font-family: "Comfortaa", sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 2rem;
+  color: wheat;
+  letter-spacing: 1;
 }
 
 .image-preview {
@@ -158,7 +157,6 @@ input#file-upload-button {
   right: auto;
 }
 
-
 @media only screen and (max-width: 768px) {
   .listing-form-content {
     display: flex;
@@ -171,7 +169,7 @@ input#file-upload-button {
     /* padding-inline: 1rem; */
   }
 
-  .listing-container{
+  .listing-container {
     padding-block: 3rem;
   }
 
@@ -201,10 +199,10 @@ input#file-upload-button {
 
   .caution-container {
     margin: auto;
-}
+  }
 
-.image-container {
-  display: flex;
-  gap: 1rem;
-}
+  .image-container {
+    display: flex;
+    gap: 1rem;
+  }
 }
