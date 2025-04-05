@@ -129,7 +129,6 @@ function CreateListing() {
     }
   };
 
-
   // Handle form submission
   // This function is triggered when the user submits the form
   const handleSubmit = async (e) => {
@@ -280,23 +279,26 @@ function CreateListing() {
               </span>
             </div>
             <div className="image-container">
-              <input
-                type="file"
-                id="image"
-                accept="image/*"
-                multiple
-                required
-                className="files"
-                onChange={(e) => setFiles(Array.from(e.target.files))} // Convert FileList to an array
-              />
-              <button
-                type="button"
-                className="uploa"
-                onClick={handleImageUpload}
-                disabled={uploading}
-              >
-                {uploading ? "Uploading" : "Upload"}
-              </button>
+              <div className="file-flex">
+                <input
+                  type="file"
+                  id="image"
+                  accept="image/*"
+                  multiple
+                  required
+                  className="files"
+                  onChange={(e) => setFiles(Array.from(e.target.files))} // Convert FileList to an array
+                />
+                <button
+                  type="button"
+                  className="uploa"
+                  onClick={handleImageUpload}
+                  disabled={uploading}
+                >
+                  {uploading ? "Uploading" : "Upload"}
+                </button>
+              </div>
+
               {formData.imageUrls.length > 0 &&
                 formData.imageUrls.map((url, index) => (
                   <div className="image-cover">
