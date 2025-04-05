@@ -11,6 +11,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import Loading from "../../components/loader/Loader";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 function CreateListing() {
   const [files, setFiles] = React.useState([]);
   const [formData, setFormData] = useState({
@@ -31,6 +32,7 @@ function CreateListing() {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   // Handle image upload
   // This function is triggered when the user selects files to upload
@@ -155,6 +157,7 @@ function CreateListing() {
       if (data.success === false) {
         setError(data.message);
       }
+      navigate(`listing/${data._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);
