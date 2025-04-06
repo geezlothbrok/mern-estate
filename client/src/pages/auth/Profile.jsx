@@ -18,8 +18,10 @@ import {
   updateUserSuccess,
 } from "../../redux/user/userSlice";
 import { toast } from "react-toastify";
-import Loader from "../../components/loader/Loader"
+import Loader from "../../components/loader/Loader";
 import { Link } from "react-router-dom";
+import { CiTrash } from "react-icons/ci";
+import { MdEdit } from "react-icons/md";
 
 function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -28,6 +30,7 @@ function Profile() {
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
+  const [userListings, setUserListings] = useState([]);
   console.log(formData);
 
   const dispatch = useDispatch();
@@ -120,171 +123,208 @@ function Profile() {
     }
   };
 
-
   // This function handles the sign-out event and sends a POST request to sign out the user.
   // It uses the fetch API to send the request and updates the Redux store accordingly.
-const handleSignOut = async () => {
-  try {
-    dispatch(signOutUserStart());
-    const res = await fetch("/api/auth/signout") // Sign out the user
-    const data = await res.json();
-    if (data.success === false) {
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch("/api/auth/signout"); // Sign out the user
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        toast.error(data.message);
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
       dispatch(deleteUserFailure(data.message));
-      toast.error(data.message);
-      return;
+      toast.error(error.message);
     }
-    dispatch(deleteUserSuccess(data));
-  } catch (error) {
-    dispatch(deleteUserFailure(data.message));
-    toast.error(error.message);
-  }
-};
+  };
+
+  const handleShowListings = async () => {
+    try {
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      if (data.success === false) {
+        toast.error(data.message);
+        return;
+      }
+      setUserListings(data);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   return (
     <>
-    {loading && <Loader />}
-    {error && toast.error(error)}
-    <div className="signup-container" style={{ paddingBlock: "1rem" }}>
-      <h1 className="signup-title">profile</h1>
-      <form
-        className="form-container"
-        style={{ marginTop: 0 }}
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="file"
-          ref={fileRef}
-          hidden
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-        <img
-          src={formData.avatar || currentUser.avatar}
-          alt="profile"
-          style={{
-            borderRadius: "50%",
-            marginBlock: "1rem",
-            height: "200px",
-            width: "200px",
-            objectFit: "cover",
-            cursor: "pointer",
-          }}
-          onClick={() => fileRef.current.click()}
-        />
-        <p>
-          {fileUploadError ? (
-            <span style={{ color: "red", fontSize: "12px" }}>
-              Error in Uploading image
-            </span>
-          ) : filePerc > 0 && filePerc < 100 ? (
+      {loading && <Loader />}
+      {error && toast.error(error)}
+      <div className="signup-container" style={{ paddingBlock: "1rem" }}>
+        <h1 className="signup-title">profile</h1>
+        <form
+          className="form-container"
+          style={{ marginTop: 0 }}
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="file"
+            ref={fileRef}
+            hidden
+            accept="image/*"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+          <img
+            src={formData.avatar || currentUser.avatar}
+            alt="profile"
+            style={{
+              borderRadius: "50%",
+              marginBlock: "1rem",
+              height: "200px",
+              width: "200px",
+              objectFit: "cover",
+              cursor: "pointer",
+            }}
+            onClick={() => fileRef.current.click()}
+          />
+          <p>
+            {fileUploadError ? (
+              <span style={{ color: "red", fontSize: "12px" }}>
+                Error in Uploading image
+              </span>
+            ) : filePerc > 0 && filePerc < 100 ? (
+              <span
+                style={{ color: "#58d68d", fontSize: "12px" }}
+              >{`Uploading ${filePerc}%`}</span>
+            ) : filePerc === 100 ? (
+              <span style={{ color: "#186a3b", fontSize: "12px" }}>
+                Image Uploaded Successfully!
+              </span>
+            ) : (
+              ""
+            )}
+          </p>
+
+          <input
+            type="text"
+            placeholder="username"
+            id="username"
+            className="username"
+            defaultValue={currentUser.username}
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            placeholder="email"
+            id="email"
+            className="username"
+            defaultValue={currentUser.email}
+            onChange={handleChange}
+          />
+          <input
+            type="password"
+            placeholder="password"
+            id="password"
+            className="username"
+            onChange={handleChange}
+          />
+          <input
+            type="tel"
+            name="phone"
+            id="phone"
+            placeholder="+233 4567890"
+            pattern="^\+?[0-9]{7,15}$"
+            inputmode="numeric"
+            defaultValue={currentUser.phone}
+            onChange={handleChange}
+            className="username"
+          />
+          <button
+            type="submit"
+            className="submit"
+            style={{
+              marginTop: 20,
+              backgroundColor: "#4caf50",
+              letterSpacing: 1,
+            }}
+            disabled={loading}
+          >
+            {loading ? "Updating..." : "Update Profile"}
+          </button>
+          <Link
+            to="/create-listing"
+            type="button"
+            className="submit"
+            style={{
+              marginTop: 20,
+              backgroundColor: "#2c3e50",
+              color: "wheat",
+              letterSpacing: 1,
+              textAlign: "center",
+            }}
+            // disabled={loading}
+          >
+            create listing
+          </Link>
+
+          <div className="already-account">
             <span
-              style={{ color: "#58d68d", fontSize: "12px" }}
-            >{`Uploading ${filePerc}%`}</span>
-          ) : filePerc === 100 ? (
-            <span style={{ color: "#186a3b", fontSize: "12px" }}>
-              Image Uploaded Successfully!
+              onClick={handleDeleteUser}
+              className="already-link"
+              style={{
+                textTransform: "capitalize",
+                color: "red",
+                cursor: "pointer",
+              }}
+            >
+              delete account
             </span>
-          ) : (
-            ""
-          )}
-        </p>
 
-        <input
-          type="text"
-          placeholder="username"
-          id="username"
-          className="username"
-          defaultValue={currentUser.username}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          placeholder="email"
-          id="email"
-          className="username"
-          defaultValue={currentUser.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          id="password"
-          className="username"
-          onChange={handleChange}
-        />
-        <input
-          type="tel"
-          name="phone"
-          id="phone"
-          placeholder="+233 4567890"
-          pattern="^\+?[0-9]{7,15}$"
-          inputmode="numeric"
-          defaultValue={currentUser.phone}
-          onChange={handleChange}
-          className="username"
-        />
-        <button
-          type="submit"
-          className="submit"
-          style={{
-            marginTop: 20,
-            backgroundColor: "#4caf50",
-            letterSpacing: 1,
-          }}
-          disabled={loading}
-        >
-          {loading ? "Updating..." : "Update Profile"}
-        </button>
-        <Link
-        to="/create-listing"
-          type="button"
-          className="submit"
-          style={{
-            marginTop: 20,
-            backgroundColor: "#2c3e50",
-            color: "wheat",
-            letterSpacing: 1,
-            textAlign: "center",
-          }}
-          // disabled={loading}
-        >
-          create listing
-        </Link>
-
-        <div className="already-account">
-          <span
-          onClick={handleDeleteUser}
-            className="already-link"
-            style={{
-              textTransform: "capitalize",
-              color: "red",
-              cursor: "pointer",
-            }}
+            <span
+              onClick={handleSignOut}
+              className="already-link"
+              style={{
+                textTransform: "capitalize",
+                cursor: "pointer",
+                marginLeft: "3rem",
+                color: "red",
+              }}
+            >
+              sign out
+            </span>
+          </div>
+          <p
+            onClick={handleShowListings}
+            className="show-listing"
+            style={{ color: "#186a3b", cursor: "pointer", fontWeight: "bold" }}
           >
-            delete account
-          </span>
-
-          <span
-          onClick={handleSignOut}
-            className="already-link"
-            style={{
-              textTransform: "capitalize",
-              cursor: "pointer",
-              marginLeft: "3rem",
-              color: "red",
-            }}
-          >
-            sign out
-          </span>
-        </div>
-        <p
-          className="show-listing"
-          style={{ color: "#186a3b", cursor: "pointer", fontWeight: "bold" }}
-        >
-          Show Listings
-        </p>
-         
-      </form>
-    </div>
+            Show Listings
+          </p>
+        </form>
+        {userListings &&
+          userListings.length > 0 &&
+          userListings.map((listing) => (
+            <div className="user-listing" key={listing._id}>
+              <Link to={`/listing/${listing._id}`}>
+                <img
+                  src={listing.imageUrls[0]}
+                  alt="cover"
+                  className="listing-cover"
+                />
+              </Link>
+              <Link to={`/listing/${listing._id}`}>
+                <p className="listing-name">
+                  {listing.name.length > 20
+                    ? listing.name.slice(0, 30) + "..."
+                    : listing.name}
+                </p>
+              </Link>
+              <div className="listing-actions">
+                <CiTrash className="listing-delete" />
+                <MdEdit className="listing-edit" />
+              </div>
+            </div>
+          ))}
+      </div>
     </>
   );
 }
