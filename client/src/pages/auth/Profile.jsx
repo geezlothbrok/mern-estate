@@ -158,6 +158,8 @@ function Profile() {
       toast.error(error.message);
     }
   };
+
+  const handleDeleteListing = async (listingId) => {};
   return (
     <>
       {loading && <Loader />}
@@ -322,7 +324,7 @@ function Profile() {
                 </p>
               </Link>
               <div className="listing-actions">
-                <CiTrash className="listing-delete" />
+                <CiTrash className="listing-delete" onClick={handleDeleteListing}/>
                 <MdEdit className="listing-edit" />
               </div>
             </div>
