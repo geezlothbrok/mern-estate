@@ -317,7 +317,7 @@ function Profile() {
               <Link to={`/listing/${listing._id}`}>
                 <p className="listing-name">
                   {listing.name.length > 20
-                    ? listing.name.slice(0, 30) + "..."
+                    ? listing.name.slice(0, 25) + "..."
                     : listing.name}
                 </p>
               </Link>

@@ -3,6 +3,7 @@
     display: grid;
     place-items: center;
     padding-block: 3rem;
+    height: 100vh;
 }
 
 .form-container {
@@ -56,15 +57,6 @@
 
 .show-listing:hover {
     text-decoration: underline;
-}
-
-.all-listings {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
 }
 
 .listing-cover {
@@ -126,4 +118,36 @@
     .form-container {
         margin-top: 0;
     }
+
+    .listing-cover {
+        height: 100px;
+        width: 150px;
+        border-radius: 5px;
+        object-fit: contain;
+    }
+
+    .user-listing {
+        display: flex;
+        box-shadow: 0 0 5px var(--border);
+        padding-block: 1rem;
+        border-radius: 5px;
+        margin-block: 1rem;
+        padding-right: 2rem;
+        width: 90%;
+    }
+
+    .listing-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 2rem;
+        margin-left: 2rem;
+    }
+    .listing-name {
+        font-size: 1rem;
+        font-weight: 700;
+        color: black;
+    }
+    
 }
