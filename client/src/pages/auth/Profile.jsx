@@ -142,6 +142,9 @@ function Profile() {
     }
   };
 
+
+  // This function handles the show listings event and sends a GET request to fetch the user's listings.
+  // It uses the fetch API to send the request and updates the userListings state with the response data.
   const handleShowListings = async () => {
     try {
       const res = await fetch(`/api/user/listings/${currentUser._id}`);
