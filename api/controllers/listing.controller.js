@@ -12,6 +12,9 @@ export const createListing = async (req, res, next) => {
     }
 };
 
+
+// Delete a listing
+// @route DELETE /api/listing/delete/:id
 export const deleteListing = async (req, res, next) => {
     const listing = await Listing.findById(req.params.id);
     if (!listing) {
@@ -29,6 +32,9 @@ export const deleteListing = async (req, res, next) => {
     }
 };
 
+
+// Update a listing
+// @route POST /api/listing/update/:id
 export const updateListing = async (req, res, next) => {
     const listing = await Listing.findById(req.params.id);
     if (!listing) {
