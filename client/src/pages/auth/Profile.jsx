@@ -159,7 +159,23 @@ function Profile() {
     }
   };
 
-  const handleDeleteListing = async (listingId) => {};
+  const handleDeleteListing = async (listingId) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        toast.error(data.message);
+        return;
+      }
+      setUserListings((prev) => prev.filter((listing) => listing._id !== listingId));
+      toast.success("Listing deleted successfully!");
+    } catch (error) {
+      toast.error(error.message);
+      
+    }
+  };
   return (
     <>
       {loading && <Loader />}
@@ -324,7 +340,7 @@ function Profile() {
                 </p>
               </Link>
               <div className="listing-actions">
-                <CiTrash className="listing-delete" onClick={handleDeleteListing}/>
+                <CiTrash className="listing-delete" onClick={()=>handleDeleteListing(listing._id)}/>
                 <MdEdit className="listing-edit" />
               </div>
             </div>
