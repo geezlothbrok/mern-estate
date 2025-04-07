@@ -142,7 +142,6 @@ function Profile() {
     }
   };
 
-
   // This function handles the show listings event and sends a GET request to fetch the user's listings.
   // It uses the fetch API to send the request and updates the userListings state with the response data.
   const handleShowListings = async () => {
@@ -159,6 +158,8 @@ function Profile() {
     }
   };
 
+  // This function handles the delete listing event and sends a DELETE request to delete the user's listing.
+  // It uses the fetch API to send the request and updates the userListings state accordingly.
   const handleDeleteListing = async (listingId) => {
     try {
       const res = await fetch(`/api/listing/delete/${listingId}`, {
@@ -169,11 +170,12 @@ function Profile() {
         toast.error(data.message);
         return;
       }
-      setUserListings((prev) => prev.filter((listing) => listing._id !== listingId));
+      setUserListings((prev) =>
+        prev.filter((listing) => listing._id !== listingId)
+      );
       toast.success("Listing deleted successfully!");
     } catch (error) {
       toast.error(error.message);
-      
     }
   };
   return (
@@ -340,7 +342,10 @@ function Profile() {
                 </p>
               </Link>
               <div className="listing-actions">
-                <CiTrash className="listing-delete" onClick={()=>handleDeleteListing(listing._id)}/>
+                <CiTrash
+                  className="listing-delete"
+                  onClick={() => handleDeleteListing(listing._id)}
+                />
                 <MdEdit className="listing-edit" />
               </div>
             </div>
