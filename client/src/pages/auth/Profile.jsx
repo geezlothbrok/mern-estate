@@ -31,7 +31,6 @@ function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [userListings, setUserListings] = useState([]);
-  console.log(formData);
 
   const dispatch = useDispatch();
 
