@@ -1,5 +1,5 @@
 import express from "express"
-import { createListing, deleteListing, updateListing } from "../controllers/listing.controller.js"
+import { createListing, deleteListing, updateListing, getListing } from "../controllers/listing.controller.js"
 import { verifyToken } from "../utils/verifyUser.js"
 
 
@@ -19,5 +19,7 @@ router.delete("/delete/:id", verifyToken, deleteListing);
 // Define a route for updating a listing by its ID
 // The route is protected by the verifyToken middleware
 router.post("/update/:id", verifyToken, updateListing);
+
+router.get('/get/:id', getListing);
 
 export default router;

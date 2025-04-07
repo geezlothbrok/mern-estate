@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CreateListing.css";
 import {
   getDownloadURL,
@@ -11,8 +11,15 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import Loading from "../../components/loader/Loader";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-function CreateListing() {
+import { useNavigate, useParams } from "react-router-dom";
+
+
+
+
+
+function UpdateListing() {
+
+
   const [files, setFiles] = React.useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -26,13 +33,30 @@ function CreateListing() {
     parking: false,
     furnished: false,
   });
-  console.log(formData);
 
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const params = useParams();
+
+  useEffect(() => {
+    const fetchListing = async () => {
+        const listingId = params.listingId;
+        const res = await fetch(`/api/listing/get/${listingId}`);
+        const data = await res.json();
+        if (data.success === false) {
+          console.log(data.message);
+            return;
+        }
+        setFormData(data);
+
+        
+    };
+
+    fetchListing();
+  }, []);
 
   // Handle image upload
   // This function is triggered when the user selects files to upload
@@ -44,59 +68,58 @@ function CreateListing() {
   // and logs them to the console
   // The function uses the Firebase Storage API to upload files and get their download URLs
   // The function uses the useState hook to manage the state of the files and formData
- 
   const handleImageUpload = (e) => {
-      if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
-        setUploading(true);
-        const promises = [];
-        for (let i = 0; i < files.length; i++) {
-          promises.push(storeImage(files[i]));
-        }
-        Promise.all(promises)
-          .then((urls) => {
-            setFormData({
-              ...formData,
-              imageUrls: formData.imageUrls.concat(urls),
-            });
-            setUploading(false);
-          })
-  
-          .catch((error) => {
-            console.error("Error uploading images: ", error);
-            setUploading(false);
-          });
-      } else {
-        alert("Please select between 1 and 6 images.");
-        setUploading(false);
+    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+      setUploading(true);
+      const promises = [];
+      for (let i = 0; i < files.length; i++) {
+        promises.push(storeImage(files[i]));
       }
-    };
-  
-      // Upload image to Firebase Storage
-    const storeImage = async (file) => {
-      return new Promise((resolve, reject) => {
-        const storage = getStorage(app);
-        const fileName = new Date().getTime() + file.name;
-        const storageRef = ref(storage, fileName);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-  
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(`Upload is ${progress}% done`);
-          },
-          (error) => {
-            reject(error);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              resolve(downloadURL);
-            });
-          }
-        );
-      });
-    };
+      Promise.all(promises)
+        .then((urls) => {
+          setFormData({
+            ...formData,
+            imageUrls: formData.imageUrls.concat(urls),
+          });
+          setUploading(false);
+        })
+
+        .catch((error) => {
+          console.error("Error uploading images: ", error);
+          setUploading(false);
+        });
+    } else {
+      alert("Please select between 1 and 6 images.");
+      setUploading(false);
+    }
+  };
+
+    // Upload image to Firebase Storage
+  const storeImage = async (file) => {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + file.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload is ${progress}% done`);
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  };
 
   // Handle image removal
   // This function is triggered when the user clicks on the remove icon of an image
@@ -107,6 +130,7 @@ function CreateListing() {
     });
   };
 
+    // Handle form input changes
   const handleChange = (e) => {
     if (e.target.id === "sale" || e.target.id === "rent") {
       setFormData({
@@ -145,7 +169,7 @@ function CreateListing() {
       setLoading(true);
       setError(false);
       toast.success("Listing created successfully!");
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`/api/listing/update/${params.listingId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -166,11 +190,13 @@ function CreateListing() {
       setLoading(false);
     }
   };
+
+
   return (
     <>
       {loading && <Loading />}
       <main className="listing-container">
-        <h2 className="listing-title">Create a Listing</h2>
+        <h2 className="listing-title">Update Listing</h2>
 
         <form className="listing-form-content" onSubmit={handleSubmit}>
           <div className="form-listing">
@@ -322,7 +348,7 @@ function CreateListing() {
                 ))}
             </div>
             <button type="submit" className="listing-submit" disabled={loading}>
-              {loading ? "Creating..." : "Create Listing"}
+              {loading ? "updating..." : "Update Listing"}
             </button>
           </div>
           {error && <p className="error-message">{error}</p>}
@@ -332,4 +358,4 @@ function CreateListing() {
   );
 }
 
-export default CreateListing;
+export default UpdateListing;

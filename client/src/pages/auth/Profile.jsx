@@ -345,7 +345,9 @@ function Profile() {
                   className="listing-delete"
                   onClick={() => handleDeleteListing(listing._id)}
                 />
-                <MdEdit className="listing-edit" />
+                <Link to={`/update-listing/${listing._id}`}>
+                  <MdEdit className="listing-edit" />
+                </Link>
               </div>
             </div>
           ))}
