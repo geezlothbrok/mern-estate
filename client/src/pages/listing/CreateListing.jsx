@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 function CreateListing() {
-  const [files, setFiles] = React.useState([]);
+  const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -203,7 +203,7 @@ function CreateListing() {
               required
               className="input-field"
               onChange={handleChange}
-              value={formData.location}
+              value={formData.address}
             />
 
             <div className="input-label">
@@ -227,7 +227,7 @@ function CreateListing() {
                 min={1}
                 max={10}
                 onChange={handleChange}
-                value={formData.bed}
+                value={formData.bedrooms}
               />
               <label htmlFor="bath">Baths</label>
               <input
@@ -238,7 +238,7 @@ function CreateListing() {
                 min={1}
                 max={10}
                 onChange={handleChange}
-                value={formData.bath}
+                value={formData.bathrooms}
               />
             </div>
             <div className="checkboxes">
@@ -288,7 +288,7 @@ function CreateListing() {
               <div className="file-flex">
                 <input
                   type="file"
-                  id="image"
+                  id="imageUrls"
                   accept="image/*"
                   multiple
                   required

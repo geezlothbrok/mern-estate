@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/private/PrivateRoute";
 import CreateListing from "./pages/listing/CreateListing";
 import UpdateListing from "./pages/listing/UpdateListing";
+import Listing from "./pages/listing/Listing";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/update-listing/:listingId" element={<UpdateListing />} />
           </Route>
           <Route path="/about-us" element={<About />} />
+          <Route path="/listing/:listingId" element={<Listing />} />
         </Routes>
       </BrowserRouter>
     </>

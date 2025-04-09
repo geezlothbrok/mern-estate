@@ -164,6 +164,15 @@ input#file-upload-button {
   right: auto;
 }
 
+
+/* styles for Listing.jsx */
+
+/* .swiper-slide {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+} */
 @media only screen and (max-width: 768px) {
   .listing-form-content {
     display: flex;

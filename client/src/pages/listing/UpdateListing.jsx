@@ -20,7 +20,7 @@ import { useNavigate, useParams } from "react-router-dom";
 function UpdateListing() {
 
 
-  const [files, setFiles] = React.useState([]);
+  const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: "",
@@ -229,7 +229,7 @@ function UpdateListing() {
               required
               className="input-field"
               onChange={handleChange}
-              value={formData.location}
+              value={formData.address}
             />
 
             <div className="input-label">
@@ -253,7 +253,7 @@ function UpdateListing() {
                 min={1}
                 max={10}
                 onChange={handleChange}
-                value={formData.bed}
+                value={formData.bedrooms}
               />
               <label htmlFor="bath">Baths</label>
               <input
@@ -264,7 +264,7 @@ function UpdateListing() {
                 min={1}
                 max={10}
                 onChange={handleChange}
-                value={formData.bath}
+                value={formData.bathrooms}
               />
             </div>
             <div className="checkboxes">
@@ -314,7 +314,7 @@ function UpdateListing() {
               <div className="file-flex">
                 <input
                   type="file"
-                  id="image"
+                  id="imageUrls"
                   accept="image/*"
                   multiple
                   required
