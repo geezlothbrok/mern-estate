@@ -55,14 +55,14 @@ function Listing() {
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
-                    height: "500px",
+                    height: "450px",
                   }}
                 ></div>
               </SwiperSlide>
             ))}
           </Swiper>
           <div className="listing-info">
-            <h1>{listing.name}</h1>
+            <h1 style={{textTransform: "capitalize"}}>{listing.name}</h1>
             
             <div className="location-box" style={{marginTop: "1.2rem"}}>
                 <MdLocationOn className="location-icon" />
@@ -71,7 +71,7 @@ function Listing() {
             <p className="price" style={{fontWeight: "bold", marginTop: "1.2rem"}}>GHS {listing.price.toLocaleString("en-US")}</p>
             <p className="type" style={{marginTop: "1.2rem"}}> For {listing.type}</p>
 
-            <p style={{marginTop: "1.2rem"}}>
+            <p style={{marginTop: "1.2rem"}} className="description-box">
                 <span className="desc">Description - </span>
                 <span className="description">
                 {listing.description }
@@ -110,9 +110,11 @@ function Listing() {
                 </div>
                 
                 </div>
+                <button type="button" className="contact-landlord">Contact  Landlord</button>
           </div>
         </>
       )}
+     
     </main>
   );
 }

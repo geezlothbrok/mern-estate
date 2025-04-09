@@ -165,7 +165,7 @@ input#file-upload-button {
 }
 
 
-/* styles for Listing.jsx */
+/* ----------------------styles for Listing.jsx------------------------ */
 
 .listing-info {
   display: flex;
@@ -173,7 +173,7 @@ input#file-upload-button {
   flex-direction: column;
   gap: 1rem;
   padding-block: 2rem;
-  padding-left: 1rem;
+  padding-inline: 7rem;
   background-color: var(--page-background);
 }
 
@@ -185,6 +185,7 @@ input#file-upload-button {
   font-weight: 700;
   color: var(--border);
   text-transform: capitalize;
+  line-height: 1.5;
 }
 
 .location-box {
@@ -209,13 +210,13 @@ input#file-upload-button {
 
 .categories {
   display: flex;
-  gap: 1rem;
+  gap: 5px;
   margin-top: 1.5rem;
 }
 
 .cat {
   display: flex;
-  gap: 1rem;
+  gap: 5px;
   margin-right: 3rem;
 }
 
@@ -250,6 +251,20 @@ input#file-upload-button {
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.contact-landlord {
+  padding: 10px;
+  text-transform: uppercase;
+  font-family: "Comfortaa", sans-serif;
+  font-weight: 700;
+  background-color: var(--main-color);
+  color: wheat;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 1rem;
+  letter-spacing: 1px;
 }
 @media only screen and (max-width: 768px) {
   .listing-form-content {
@@ -326,4 +341,39 @@ input#file-upload-button {
     height: 3.3rem;
     padding: 20px;
   }
+
+/* mobile styles for Listing.jsx */
+
+.listing-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding-block: 2rem;
+  padding-inline: .5rem;
+  background-color: var(--page-background);
+}
+
+.listing-info h1 {
+  text-align: center;
+}
+
+.description-box {
+  text-align: left;
+  line-height: 2;
+}
+
+.categories {
+  display: flex;
+  gap: 5px;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+.cat {
+  display: flex;
+  gap: 5px;
+  margin-right: 1.5rem;
+}
 }
