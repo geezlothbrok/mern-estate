@@ -9,14 +9,16 @@ import { FaBath, FaBed, FaParking } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import "swiper/css/bundle";
 import "./CreateListing.css";
+import Contact from "../../components/contact/Contact";
 
 function Listing() {
   SwipetCore.use([Navigation]);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [contact, setContact] = useState(false);
   const params = useParams();
-    const { currentUser } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -62,59 +64,94 @@ function Listing() {
             ))}
           </Swiper>
           <div className="listing-info">
-            <h1 style={{textTransform: "capitalize"}}>{listing.name}</h1>
-            
-            <div className="location-box" style={{marginTop: "1.2rem"}}>
-                <MdLocationOn className="location-icon" />
-                <p className="location" style={{textTransform: "capitalize", fontWeight: "bold"}}>{listing.address}</p>
-            </div>
-            <p className="price" style={{fontWeight: "bold", marginTop: "1.2rem"}}>GHS {listing.price.toLocaleString("en-US")}</p>
-            <p className="type" style={{marginTop: "1.2rem"}}> For {listing.type}</p>
+            <h1 style={{ textTransform: "capitalize" }}>{listing.name}</h1>
 
-            <p style={{marginTop: "1.2rem"}} className="description-box">
-                <span className="desc">Description - </span>
-                <span className="description">
-                {listing.description }
-                </span>
-               
+            <div className="location-box" style={{ marginTop: "1.2rem" }}>
+              <MdLocationOn className="location-icon" />
+              <p
+                className="location"
+                style={{ textTransform: "capitalize", fontWeight: "bold" }}
+              >
+                {listing.address}
+              </p>
+            </div>
+            <p
+              className="price"
+              style={{ fontWeight: "bold", marginTop: "1.2rem" }}
+            >
+              GHS {listing.price.toLocaleString("en-US")}
+            </p>
+            <p className="type" style={{ marginTop: "1.2rem" }}>
+              {" "}
+              For {listing.type}
+            </p>
+
+            <p style={{ marginTop: "1.2rem" }} className="description-box">
+              <span className="desc">Description - </span>
+              <span className="description">{listing.description}</span>
             </p>
             <div className="categories">
-                <div className="cat">
-                    <FaBath className="location-icon"/>
-                    <p className="cat-value">{listing.bathrooms > 1 ? `${listing.bathrooms} bathrooms` : `${listing.bathrroms} bathroom`}</p>
-                </div>
-                <div className="cat">
-                <FaBed className="location-icon"/>
-                    <p className="cat-value">{listing.bathrooms > 1 ? `${listing.bathrooms} bedrooms` : `${listing.bathrroms} bedroom`}</p>
-                </div>
-                <div className="cat">
-                <FaParking className="location-icon"/>
-                <p className="cat-value">{listing.parking ? "Yes" : "No Parking"}</p>
-                </div>
-                <div className="cat">
-                <MdChair className="location-icon"/>
-                <p className="cat-value">{listing.parking ? "Yes" : "Not Furnished"}</p>
-                </div>
-            </div>
-            <div className="user-box">
-                <img src={currentUser.avatar} alt="" className="user-image" />
-                <div className="user-info">
-                <p className="user-name">{currentUser.username}</p>
-                {currentUser && currentUser._id === listing.userId && (
-                  <p className="user-role">You</p>
-                )}
-                <p className="phone-number">  
-                    <span className="tel" style={{fontWeight: 700, fontSize: "small"}}>Phone - </span>
-                    <span className="tel-number">{currentUser.phone}</span>
+              <div className="cat">
+                <FaBath className="location-icon" />
+                <p className="cat-value">
+                  {listing.bathrooms > 1
+                    ? `${listing.bathrooms} bathrooms`
+                    : `${listing.bathrroms} bathroom`}
                 </p>
-                </div>
-                
-                </div>
-                <button type="button" className="contact-landlord">Contact  Landlord</button>
+              </div>
+              <div className="cat">
+                <FaBed className="location-icon" />
+                <p className="cat-value">
+                  {listing.bathrooms > 1
+                    ? `${listing.bathrooms} bedrooms`
+                    : `${listing.bathrroms} bedroom`}
+                </p>
+              </div>
+              <div className="cat">
+                <FaParking className="location-icon" />
+                <p className="cat-value">
+                  {listing.parking ? "Yes" : "No Parking"}
+                </p>
+              </div>
+              <div className="cat">
+                <MdChair className="location-icon" />
+                <p className="cat-value">
+                  {listing.parking ? "Yes" : "Not Furnished"}
+                </p>
+              </div>
+            </div>
+            {/* <div className="user-box">
+              <img src={currentUser.avatar} alt="" className="user-image" />
+              <div className="user-info">
+                {currentUser && currentUser._id === listing.userId ? (
+                  <>
+                    <p className="user-name">Posted by you</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="user-name">{listing.username}</p>
+                    <p className="phone-number">
+                      <span
+                        className="tel"
+                        style={{ fontWeight: 700, fontSize: "small" }}
+                      >
+                        Phone -{" "}
+                      </span>
+                      <span className="tel-number">{listing.phone}</span>
+                    </p>
+                  </>
+                )}
+              </div>
+            </div> */}
+            {currentUser && listing.userRef != currentUser._id && !contact && (
+              <button type="button" className="contact-landlord" onClick={() => setContact(!contact)}>
+                Contact Landlord
+              </button>
+            )}
+            {contact && <Contact listing={listing} />}
           </div>
         </>
       )}
-     
     </main>
   );
 }

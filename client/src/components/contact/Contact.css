@@ -1,0 +1,45 @@
+.message {
+    width: 100%;
+    padding: 20px;
+    border-radius: 3px;
+    border: transparent;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: "Comfortaa", sans-serif;
+    outline: none;
+    box-sizing: border-box;
+    margin-block: 1rem;
+}
+
+.message:focus {
+    box-shadow: 0 0 5px rgba(44, 62, 80, 0.5);
+}
+
+.landlord {
+    margin-top: 1.5rem;
+}
+
+.contact a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 3px;
+    border: transparent;
+    background: #2c3e50;
+    color: wheat;
+    font-family: "Comfortaa", sans-serif;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 700;
+}
