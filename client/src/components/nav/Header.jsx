@@ -5,6 +5,8 @@ import avatar from "../../assets/images/display_photo.jpg";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import { CiSearch } from "react-icons/ci";
+
 
 
 function Header() {
@@ -58,8 +60,11 @@ function Header() {
             <NavLink to="/sign-in" onClick={() => setIsOpen(false)}>
               Sign in
             </NavLink>
+            <form onSubmit={handleSubmit}>
             <input type="text" placeholder="search..." className="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
-            <button onClick={handleSubmit}>search</button>
+            <button >search</button>
+            </form>
+            
           </div>
 
           {/* Desktop Navbar */}
@@ -70,8 +75,11 @@ function Header() {
             <NavLink to="/listings">Listings</NavLink>
           </div>
           <div className="nav-search">
+          <form onSubmit={handleSubmit}>
             <input type="text" placeholder="search..." className="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
-            <button onClick={handleSubmit}>search</button>
+            <button className="search-button"><CiSearch />
+            </button>
+            </form>
           </div>
 
           <div className="nav-auth">
