@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import avatar from "../../assets/images/display_photo.jpg";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
@@ -10,7 +10,26 @@ import { useSelector } from "react-redux";
 function Header() {
   const {currentUser} = useSelector(state => state.user)
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set(searchTerm, "searchTerm");
+    const seachQuery = urlParams.toString();
+    navigate(`/search?${seachQuery}`);
+  };
+
+  useEffect(() => {
+   const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  
+  }, [location.search])
+  
   return (
     <>
     {isOpen && <div className="overlay" onClick={() => setIsOpen(false)}></div>}
@@ -39,7 +58,8 @@ function Header() {
             <NavLink to="/sign-in" onClick={() => setIsOpen(false)}>
               Sign in
             </NavLink>
-            <input type="text" placeholder="search..." className="search"/>
+            <input type="text" placeholder="search..." className="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+            <button onClick={handleSubmit}>search</button>
           </div>
 
           {/* Desktop Navbar */}
@@ -50,7 +70,8 @@ function Header() {
             <NavLink to="/listings">Listings</NavLink>
           </div>
           <div className="nav-search">
-            <input type="text" placeholder="search..." className="search" />
+            <input type="text" placeholder="search..." className="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+            <button onClick={handleSubmit}>search</button>
           </div>
 
           <div className="nav-auth">
