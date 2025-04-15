@@ -54,6 +54,12 @@
     font-weight: 600;
 }
 
+.all-search {
+    display: flex;
+    align-items: center;
+    gap: 2rem
+}
+
 .sea {
     display: flex;
 }
@@ -64,4 +70,10 @@
 
 .sea span {
     margin-left: .2rem;
+}
+
+.hello {
+    display: flex;
+    justify-content: center;
+    align-items: center
 }
