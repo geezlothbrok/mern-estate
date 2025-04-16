@@ -33,15 +33,25 @@ function Search() {
           <div className="all-search">
             <div className="sea">
               <label>Aminities:</label>
-              <input type="checkbox" id="all" />
+              <input type="checkbox" id="parking" />
               <span>Parking</span>
             </div>
             <div className="hello">
-              <input type="checkbox" id="rent" />
+              <input type="checkbox" id="furnished" />
               <span>Furnished</span>
             </div>
             
           </div>
+          <div className="sort">
+            <label >Sort:</label>
+            <select id="sort_order">
+                <option value="">Price high to low</option>
+                <option value="">Price low to high</option>
+                <option value="">Latest</option>
+                <option value="">Oldest</option>
+            </select>
+          </div>
+          <button className="sort-button">Search</button>
         </form>
       </section>
       <section className="right-side">

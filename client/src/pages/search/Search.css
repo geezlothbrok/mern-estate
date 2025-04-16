@@ -4,7 +4,7 @@
    background-color: var(--page-background);
    height: 100vh;
    padding-inline: 4rem;
-   padding-block: 1rem;
+   padding-top: 2rem;
 }
 
 .left-side {
@@ -51,7 +51,7 @@
 }
 
 .search-term label, .sea label {
-    font-weight: 600;
+    font-weight: bold;
 }
 
 .all-search {
@@ -76,4 +76,31 @@
     display: flex;
     justify-content: center;
     align-items: center
+}
+
+.sort {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sort select {
+    padding: 10px;
+    outline: none;
+    background: var(--white-color);
+    border: transparent;
+    border-radius: 3px;
+    font-family: "Comfortaa", sans-serif;
+}
+
+.sort-button {
+    background: var(--main-color);
+    padding: 1rem;
+    border: none;
+    border-radius: 3px;
+    color: var(--white-color);
+    letter-spacing: 1px;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 600;
+    cursor: pointer;
 }
