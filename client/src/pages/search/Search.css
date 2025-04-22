@@ -1,17 +1,24 @@
 .search-main {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
    gap: 2rem;
    background-color: var(--page-background);
    height: 100vh;
    padding-inline: 4rem;
-   padding-top: 2rem;
+   padding-top: 18rem;
 }
 
 .left-side {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
     width: 100%;
+    gap: 2rem;
+   
 }
 
 .left-side form {
@@ -24,8 +31,11 @@
 .right-side {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
     width: 100%;
+    justify-content: center;
+    height: 100%;
+    margin-top: 10rem;
+    padding-bottom: 2rem;
 }
 
 .look-for {
@@ -103,4 +113,19 @@
     font-family: "Comfortaa", sans-serif;
     font-weight: 600;
     cursor: pointer;
+}
+
+.listings-response {
+    text-align: center;
+    font-weight: 700;
+}
+
+.listings-info {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.card-text {
+    padding: 5px;
 }

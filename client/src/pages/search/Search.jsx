@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Search.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import Loading from "../../components/loader/Loader";
+import SearchListingCard from "../../components/card/SearchListingCard";
 
 function Search() {
   const [sidebardata, setSidebardata] = useState({
@@ -180,6 +182,19 @@ function Search() {
       </section>
       <section className="right-side">
         <h1>Listing results:</h1>
+        <div className="listings-info">
+          {!loading && listings.length === 0 && (
+            <p className="listings-response">No listing found!</p>
+          )}
+          {loading && <Loading />}
+          {!loading && listings && listings.length > 0 && (
+            <>
+              {listings.map((listing) => (
+                <SearchListingCard key={listing._id} listing={listing} />
+              ))}
+            </>
+          )}
+        </div>
       </section>
     </main>
   );

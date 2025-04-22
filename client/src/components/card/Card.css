@@ -1,0 +1,53 @@
+.card-container {
+    box-shadow: 0 0 5px var(--border);
+    padding: 10px;
+    width: 285px;
+    flex-wrap: wrap;
+}
+
+
+.card-image {
+  width: auto;
+  height: 150px;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-image:hover{
+    transform: scale(1.02);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-icons, .card-details, .card-amount, .amenity-types {
+    display: flex;
+    padding: 5px;
+    align-items: center;
+}
+
+.card-details p {
+    font-size: x-small;
+}
+
+.card-amount p {
+    font-size: small;
+}
+
+.amenity-types ul {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.amenity-types ul li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .3rem;
+}
+
+.amenity-types ul li p {
+    font-size: x-small;
+    color: black;
+}
+  
