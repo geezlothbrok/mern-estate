@@ -47,7 +47,7 @@ function SearchListingCard({ listing }) {
           </p>
         </div>
         <div className="card-amount">
-          <p className="price" style={{ fontWeight: "bold", color: "black" }}>
+          <p className="price" style={{ fontWeight: "200", color: "black", fontSize: "0.7rem" }}>
             GHS {listing.price.toLocaleString("en-US")}
             {listing.type === "rent" && " / month"}
           </p>
@@ -55,22 +55,22 @@ function SearchListingCard({ listing }) {
         <div className="amenity-types">
           <ul>
             <li>
-              <FaBath className="location-icon" size={10}/>
-              <p className="cat-value">
+              
+              <p className="cat-value" style={{ fontWeight: "900" }}>
                 {listing.bathrooms > 1
                   ? `${listing.bathrooms} baths`
                   : `${listing.bathrooms} bath`}
               </p>
             </li>
             <li>
-              <FaBed className="location-icon" size={10}/>
-              <p className="cat-value">
+              
+              <p className="cat-value" style={{ fontWeight: "700" }}>
                 {listing.bathrooms > 1
                   ? `${listing.bathrooms} beds`
                   : `${listing.bathrooms} bed`}
               </p>
             </li>
-            <li>
+            {/* <li>
               <FaParking className="location-icon" size={10}/>
               <p className="cat-value">
                 {listing.parking ? "Yes" : "No Parking"}
@@ -81,7 +81,7 @@ function SearchListingCard({ listing }) {
               <p className="cat-value">
                 {listing.parking ? "Yes" : "Not Furnished"}
               </p>
-            </li>
+            </li> */}
           </ul>
         </div>
       </Link>

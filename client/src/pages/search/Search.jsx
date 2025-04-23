@@ -15,8 +15,7 @@ function Search() {
   });
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
-  console.log("current listings", listings);
-
+  const [showMore, setshowMore] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -49,11 +48,16 @@ function Search() {
 
     const fetchListings = async () => {
       setLoading(true);
+      setshowMore(false);
       const searchQuery = urlParams.toString();
       console.log("Fetching with query:", searchQuery);
       const res = await fetch(`/api/listing/get?${searchQuery}`);
       const data = await res.json();
-      console.log("API response:", data);
+      if (data.length > 8) {
+        setshowMore(true);
+      } else {
+        setshowMore(false)
+      }
       setListings(data);
       setLoading(false);
     };
@@ -97,6 +101,20 @@ function Search() {
     urlParams.set("order", sidebardata.order);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
+  };
+
+  const onShowMoreClick = async () => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fecth(`/api/listing/get?${searchQuery}`);
+    const data = await res.json();
+    if(data.length < 9) {
+      setshowMore(false);
+    }
+    setListings([...listings, ...data])
   };
   return (
     <main className="search-main">
@@ -193,6 +211,24 @@ function Search() {
                 <SearchListingCard key={listing._id} listing={listing} />
               ))}
             </>
+          )}
+        </div>
+        <div className="">
+          {showMore && (
+            <button
+              onClick={() => {
+                onShowMoreClick();
+              }}
+              style={{
+                color: "green",
+                fontSize: "0.7rem",
+                background: "transparent",
+                border: "transparent",
+                textDecoration: "underlined"
+              }}
+            >
+              Show more
+            </button>
           )}
         </div>
       </section>
