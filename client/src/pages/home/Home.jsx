@@ -1,8 +1,17 @@
-import React from 'react'
+import React from 'react';
+import "./Home.css";
 
 function Home() {
   return (
-    <div>Home</div>
+    <main className='home-container'>
+      <div className="hero-section">
+        <div className="background-image">
+          <div className="hero-background-title">
+            <h1 className="background-title">Lets find your dream house.</h1>
+          </div>
+        </div>
+      </div>
+    </main>
   )
 }
 
