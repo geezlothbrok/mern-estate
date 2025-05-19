@@ -83,3 +83,23 @@
     border-radius: 10px;
     padding: 5px;
   }
+
+  .intro-sect {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 1rem;
+    padding-block: 3rem;
+  }
+
+  .intro-header {
+    color: #010e1c;
+    font-size: 2.3rem;
+    font-weight: bold;
+  }
+
+  .intro-text {
+    color: #5f5f60;
+    line-height: 1.5;
+  }
