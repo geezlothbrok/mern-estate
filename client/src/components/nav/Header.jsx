@@ -54,9 +54,6 @@ function Header() {
             <NavLink to="/contact" onClick={() => setIsOpen(false)}>
               Contact
             </NavLink>
-            <NavLink to="/listings" onClick={() => setIsOpen(false)}>
-              Listings
-            </NavLink>
             <NavLink to="/sign-in" onClick={() => setIsOpen(false)}>
               Sign in
             </NavLink>
@@ -72,7 +69,6 @@ function Header() {
             <NavLink to="/">Home</NavLink>
             <NavLink to="/about-us">About Us</NavLink>
             <NavLink to="/contact">Contact</NavLink>
-            <NavLink to="/listings">Listings</NavLink>
           </div>
           <div className="nav-search">
           <form onSubmit={handleSubmit}>

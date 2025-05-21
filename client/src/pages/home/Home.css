@@ -1,7 +1,6 @@
-/* .home-container {
-    display: grid;
-    place-items: center;
-} */
+.home-container {
+   padding-bottom: 2rem;
+}
 
 .hero-section {
    padding: .3rem .3rem 2rem .3rem;
