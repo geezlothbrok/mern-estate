@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Home.css";
 import { BiBuildingHouse } from "react-icons/bi";
 import { LiaWarehouseSolid } from "react-icons/lia";
@@ -6,10 +6,49 @@ import { MdOutlineVilla } from "react-icons/md";
 import { PiBuildingApartmentLight } from "react-icons/pi";
 import { RiHome9Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import SwiperCore from 'swiper';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css/bundle';
+import SearchListingCard from '../../components/card/SearchListingCard';
 
 
 
 function Home() {
+  const [saleListings, setSaleListings] = useState([]);
+  const [rentListings, setRentListings] = useState([]);
+  SwiperCore.use([Navigation]);
+  console.log(saleListings);
+  console.log("rent Listings", rentListings);
+  
+  
+
+
+  useEffect(() => {
+    const fetchRentListings = async () => {
+      try {
+        const res = await fetch("/api/listing/get?type=rent&limit=4");
+        const data = await res.json();
+        setRentListings(data);
+        fetchSaleListings();
+      } catch (error) {
+        console.log("Error fetching rent listings:", error);
+        
+      }
+    }
+
+    const fetchSaleListings = async () => {
+      try {
+        const res = await fetch("/api/listing/get?type=sale&limit=4");
+        const data = await res.json();
+        setSaleListings(data);
+      } catch (error) {
+        console.log("Error fetching sale listings:", error);
+      }
+    }
+
+    fetchRentListings();
+  },[])
   return (
     <main className='home-container'>
       <div className="hero-section">
@@ -54,7 +93,48 @@ function Home() {
           We understand that finding the right home can be overwhelming, which is why we are here to help you every step of the way. <br />
           Whether you are a first-time homebuyer or an experienced investor, we have the knowledge and expertise to help you achieve your real estate goals. <br />
           </p>
-          <Link to = "/search" style={{color: "#1a8f4d", fontWeight: 700}}>Let's get started...</Link>
+          <Link to = "/search" style={{color: "#1a8f4d", fontWeight: 700}} className="get-started">Let's get started...</Link>
+      </div>
+
+      <Swiper navigation>
+        {rentListings && rentListings.length > 0 && rentListings.map((rent)=> 
+        <SwiperSlide>
+          <div className="swiper-cover" key = {rent._id} 
+          style={{
+            background: `url(${rent.imageUrls[0]})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            height: "450px",
+          }}></div>
+        </SwiperSlide>)}
+      </Swiper>
+      <div className="home-listings">
+        {rentListings && rentListings.length > 0 && (
+          <div className="caption">
+            <h2 style={{fontSize: "2rem", fontWeight: "bold"}}>Recent Places for Rent</h2>
+            <Link to="/search?type=rent" className="view-all">View All...</Link>
+          </div>
+        )}
+        <div className="show-listings">
+          {rentListings.map((rent) => (
+            <SearchListingCard key={rent._id} listing={rent} />
+          ))}
+        </div>
+      </div>
+
+      <div className="home-listings">
+        {saleListings && saleListings.length > 0 && (
+          <div className="caption">
+            <h2 style={{fontSize: "2rem", fontWeight: "bold"}}>Recent Places for Sale</h2>
+            <Link to="/search?type=sale" className="view-all">View All</Link>
+          </div>
+        )}
+        <div className="show-listings">
+          {saleListings.map((sale) => (
+            <SearchListingCard key={sale._id} listing={sale} />
+          ))}
+        </div>
       </div>
     </main>
   )

@@ -103,3 +103,41 @@
     color: #5f5f60;
     line-height: 1.5;
   }
+
+  .get-started:hover {
+    text-decoration: underline;
+  }
+
+  .home-listings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 1rem;
+    margin-block: 3rem;
+  }
+
+  .caption {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: auto;
+  }
+
+  .view-all {
+    color: #1a8f4d;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .view-all:hover {
+    text-decoration: underline;
+  }
+
+  .show-listings {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: auto;
+    margin-top: 2rem;
+  }
