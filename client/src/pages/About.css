@@ -1,0 +1,31 @@
+.about-container {
+    display: grid;
+    place-items: center;
+    padding-inline: 2rem;
+    padding-block: 3rem;
+    gap: 2.5rem;
+}
+
+.about-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.about-text {
+    line-height: 2;
+}
+
+.what-we-offer li{
+    margin-bottom: 1rem;
+    list-style:inside;
+}
+
+.what-we-offer ul {
+    margin-top: 1.5rem;
+}
+
+.mern {
+    color: var( --color-orange);
+    font-weight: bold;
+}
