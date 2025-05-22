@@ -107,6 +107,13 @@
     text-decoration: underline;
   }
 
+  /* .swiper-cover {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 500px;
+} */
+
   .home-listings {
     display: flex;
     flex-direction: column;
@@ -140,3 +147,67 @@
     margin: auto;
     margin-top: 2rem;
   }
+
+  /* ------------MOBILE RESPONSIVE STYLES------------ */
+  @media only screen and (max-width: 768px) {
+    .home-container {
+      display: flex;
+    flex-direction: column;
+    }
+
+    .hero-section {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+.svg-container {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .svg-card {
+    width: 120px;
+    height: 120px;
+  }
+
+  .svg-card h3 {
+    font-size: medium;
+  }
+
+  .intro-header {
+    font-size: 1.8rem;
+    font-weight: bolder;
+    text-align: center;
+  }
+
+  .swiper-cover {
+    display: none;
+  }
+
+  .show-listings {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .home-listings {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: .5rem;
+    margin-block: 3rem;
+  }
+
+  .caption {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  }
+  

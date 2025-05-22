@@ -131,9 +131,9 @@ function Home() {
       <div className="intro-sect">
         <h1 className="intro-header">
           Find your{" "}
-          <span style={{ fontWeight: 700, color: "#2c3e50", lineHeight: 2 }}>
+          <span style={{ fontWeight: 700, color: "#2c3e50", lineHeight: 1.5 }}>
             perfect
-          </span>{" "}
+          </span> {" "}
           dream home with us! <br />
           We make it easy to find your dream home. <br />
         </h1>
