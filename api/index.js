@@ -5,6 +5,7 @@ import userRouter from "./routes/user.routes.js";
 import authRouter from "./routes/auth.routes.js";
 import listingRouter from "./routes/listing.routes.js";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ mongoose
   .catch((err) => {
     console.log("Database connection error:", err);
   });
+
+const _dirname = path.resolve();
 
 
   // Create a new connection with options
@@ -47,6 +50,12 @@ app.listen(3000, () => {
 app.use("/api/user", userRouter); // user routes
 app.use("/api/auth", authRouter); // auth routes
 app.use("/api/listing", listingRouter); // listing routes
+
+app.use(express.static(path.join(_dirname, "/client/dist"))); // Serve static files from the frontend build directory
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(_dirname, "client", "dist", "index.html")); // Serve the frontend app for all other routes
+}); // Catch-all route to serve the frontend app
 
 //middle ware for error handling
 app.use((err, req, res, next) => {
